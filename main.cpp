@@ -3,31 +3,73 @@
 
 void init(void)
 {
-	/* 화면의 기본색으로 dark blue 설정 */
-	glClearColor(0.0f, 0.0f, 0.5f, 1.0f);
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+	glMatrixMode(GL_PROJECTION);
+
+	glClearDepth(1.0f);
+	glEnable(GL_DEPTH_TEST);
+
+	GLfloat ambient_Sun[] = { 0.2f, 0.2f, 0.2f, 1.0f };
+	GLfloat diffuse_Sun[] = { 1.0f, 0.0f, 0.0f, 1.0f };
+	GLfloat specular_Sun[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+	glMaterialfv(GL_FRONT, GL_AMBIENT, ambient_Sun);
+	glMaterialfv(GL_FRONT, GL_DIFFUSE, diffuse_Sun);
+	glMaterialfv(GL_FRONT, GL_SPECULAR, specular_Sun);
+	glMaterialf(GL_FRONT, GL_SHININESS, 64);
+
+	glEnable(GL_COLOR_MATERIAL);
+	glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
+
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);
 }
 
 void draw(void)
 {
-	/* Teapot 1개를 그리는 임시 루틴 */
-	glClear(GL_COLOR_BUFFER_BIT);
-	glColor3f(1.0f, 1.0f, 1.0f); /* 인자를 바꾸면 색이 변화 */
-	glutWireTeapot(0.5f); /* 주전자를 하나 그림 */
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+
 	glFlush();
+	glutSwapBuffers();
+}
+
+void idle(void) 
+{
+
+}
+
+void resize(int width, int height)
+{
+	glViewport(0, 0, width, height);
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluPerspective(45, (float)width / (float)height, 1, 500);
+	glMatrixMode(GL_MODELVIEW);
+}
+
+void keyboard(unsigned char key, int x, int y)
+{
+	
 }
 
 int main(int argc, char** argv)
 {
-	/* Window 초기화 */
+	// init Window
 	glutInit(&argc, argv);
-	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
+	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
 	glutInitWindowSize(500, 500);
 	glutInitWindowPosition(300, 300);
 	glutCreateWindow("My First GL Program");
-	init(); // -> 사용자 초기화 함수
-	/* Callback 함수 정의 */
-	glutDisplayFunc(draw); /* draw() -> 실제 그리기 함수 */
-	/* Looping 시작 */
+	init();
+	
+	//Callback
+	glutReshapeFunc(resize);
+	glutDisplayFunc(draw);
+	glutKeyboardFunc(keyboard);
+	glutIdleFunc(idle);
+
+	//Main Loop
 	glutMainLoop();
 	return 0;
 }
