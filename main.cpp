@@ -1,5 +1,8 @@
 #include <gl/glut.h>
 #include <stdio.h>
+#include "GameManager.h"
+
+GameManager* GM = new GameManager;
 
 void init(void)
 {
@@ -22,6 +25,8 @@ void init(void)
 
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
+
+	GM->Init();
 }
 
 void draw(void)
@@ -30,13 +35,15 @@ void draw(void)
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
+	GM->Render();
+
 	glFlush();
 	glutSwapBuffers();
 }
 
 void idle(void) 
 {
-
+	GM->Update();
 }
 
 void resize(int width, int height)
@@ -50,7 +57,12 @@ void resize(int width, int height)
 
 void keyboard(unsigned char key, int x, int y)
 {
-	
+	GM->HandleInput(key);
+}
+
+void specialKeyboard(int key, int x, int y)
+{
+	GM->HandleSpecialInput(key);
 }
 
 int main(int argc, char** argv)
@@ -67,6 +79,7 @@ int main(int argc, char** argv)
 	glutReshapeFunc(resize);
 	glutDisplayFunc(draw);
 	glutKeyboardFunc(keyboard);
+	glutSpecialFunc(specialKeyboard);
 	glutIdleFunc(idle);
 
 	//Main Loop

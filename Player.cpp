@@ -24,3 +24,13 @@ void Player::Render()
 {
 
 }
+
+void Player::HandleInput(unsigned char key)
+{
+
+}
+
+void Player::HandleSpecialInput(int  key)
+{
+
+}

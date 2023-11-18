@@ -5,6 +5,8 @@
 
 #include "Object.h"
 
+using namespace std;
+
 class Character : public Object
 {
 public:

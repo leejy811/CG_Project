@@ -5,6 +5,8 @@
 
 #include "Character.h"
 
+using namespace std;
+
 class Player : public Character
 {
 public:
@@ -14,6 +16,8 @@ public:
 	void Init();
 	void Update();
 	void Render();
+	void HandleInput(unsigned char key);
+	void HandleSpecialInput(int  key);
 private:
 
 };

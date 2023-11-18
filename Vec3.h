@@ -134,7 +134,7 @@ public:
 	{
 		return  *((&_value[0]) + n);
 	}
-	Vec3	cross(Vec3& v)
+	Vec3	cross(Vec3 v)
 	{
 		Vec3 vector;
 		vector.x((_value[1] * v.z()) - (_value[2] * v.y()));

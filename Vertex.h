@@ -4,11 +4,11 @@
 #pragma once
 
 #include "Vec3.h"
-#include "Face.h"
 #include <vector>
 
 using namespace std;
 
+class Face;
 class Vertex
 {
 public:
@@ -19,7 +19,7 @@ public:
 	vector<Vertex*>	_nbVertices; // Neighbor vertex
 public:
 	Vertex() { }
-	Vertex(int index, Vec3 pos, Vec3 vel, double invMass)
+	Vertex(int index, Vec3 pos)
 	{
 		_index = index;
 		_pos = pos;
