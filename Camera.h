@@ -17,7 +17,7 @@ public:
 	void Update();
 	void Render();
 
-	void SetViewMatrix(Vec3& pos, Vec3& up, Vec3& front);
+	void SetViewMatrix();
 	void SetTarget(Object& tar);
 
 	Vec3 offset;

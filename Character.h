@@ -11,13 +11,17 @@ class Character : public Object
 {
 public:
 	Character();
+	Character(const char* filename);
+	Character(const char* filename, Vec3 pos, Vec3 ro, Vec3 s);
 	~Character();
 
 	virtual void Init();
 	virtual void Update();
 	virtual void Render();
-private:
-
+protected:
+	void Move();
+	Vec3 _moveDirection;
+	double _moveSpeed = 2.5;
 };
 
 #endif

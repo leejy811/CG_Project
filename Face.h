@@ -2,7 +2,7 @@
 #define __FACE_H__
 
 #pragma once
-#include "Vertex.h"
+#include "Vec3.h"
 
 using namespace std;
 
@@ -11,29 +11,39 @@ class Face
 public:
 	int				_index;
 	Vec3	_normal;
-	vector<Vertex*>	_vertices; // Triangle : num. vertex -> 3
+	vector<Vec3>	_vertices;
+	vector<Vec3>	_uvs;
+	vector<Vec3>	_vertNormals;
 public:
 	Face() { }
-	Face(int index, Vertex* v0, Vertex* v1, Vertex* v2)
+	Face(int index, Vec3 v0, Vec3 v1, Vec3 v2, Vec3 u0, Vec3 u1, Vec3 u2, Vec3 n0, Vec3 n1, Vec3 n2)
 	{
 		_index = index;
 		_vertices.push_back(v0);
 		_vertices.push_back(v1);
 		_vertices.push_back(v2);
+
+		_uvs.push_back(u0);
+		_uvs.push_back(u1);
+		_uvs.push_back(u2);
+
+		_vertNormals.push_back(n0);
+		_vertNormals.push_back(n1);
+		_vertNormals.push_back(n2);
 	}
 	~Face() { }
 public:
-	int		getIndex(Vertex* v)
-	{
-		for (int i = 0; i < 3; i++)
-		{
-			if (_vertices[i] == v)
-			{
-				return i;
-			}
-		}
-		return -1;
-	}
+	//int		getIndex(Vertex* v)
+	//{
+	//	for (int i = 0; i < 3; i++)
+	//	{
+	//		if (_vertices[i] == v)
+	//		{
+	//			return i;
+	//		}
+	//	}
+	//	return -1;
+	//}
 };
 
 #endif

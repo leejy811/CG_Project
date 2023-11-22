@@ -25,12 +25,12 @@ void Camera::Update()
 
 void Camera::Render()
 {
-	SetViewMatrix(_position, _up, _front);
+	SetViewMatrix();
 }
 
-void Camera::SetViewMatrix(Vec3& pos, Vec3& up, Vec3& front)
+void Camera::SetViewMatrix()
 {
-	gluLookAt(pos.x(), pos.y(), pos.z(), front.x(), front.y(), front.z(), up.x(), up.y(), up.z());
+	gluLookAt(_position.x(), _position.y(), _position.z(), _front.x(), _front.y(), _front.z(), _up.x(), _up.y(), _up.z());
 }
 
 void Camera::SetTarget(Object& tar)

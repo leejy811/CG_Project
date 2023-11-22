@@ -12,8 +12,8 @@ GameManager::~GameManager()
 
 void GameManager::Init()
 {
-	_player = new Player();
-	_mainCamera = new Camera(Vec3(10, 10, 0), *_player);
+	_player = new Player("OBJ/Soldier.obj", Vec3(0, 0, 0), Vec3(0, 0, 0), Vec3(0.5, 0.5, 0.5));
+	_mainCamera = new Camera(Vec3(0, 500, -100), *_player);
 }
 
 void GameManager::Update()
@@ -34,7 +34,7 @@ void GameManager::Update()
 
 void GameManager::Render()
 {
-	_mainCamera->Render();
+	_mainCamera->SetViewMatrix();
 	_player->Render();
 
 	for (auto e : _enemies)
@@ -48,12 +48,17 @@ void GameManager::Render()
 	}
 }
 
-void GameManager::HandleInput(unsigned char key)
+void GameManager::HandleKeyInput(unsigned char key, int state)
 {
-	_player->HandleInput(key);
+	_player->HandleInput(key, state);
 }
 
-void GameManager::HandleSpecialInput(int  key)
+void GameManager::HandleSpecialInput(int  key, int state)
 {
-	_player->HandleSpecialInput(key);
+	_player->HandleSpecialInput(key, state);
+}
+
+void GameManager::HandleMouseInput(int x, int y, int state)
+{
+	_player->HandleMouseInput(x, y, state);
 }

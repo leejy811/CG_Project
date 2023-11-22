@@ -14,6 +14,8 @@ class Object
 {
 public:
 	Object();
+	Object(const char* filename);
+	Object(const char* filename, Vec3 pos, Vec3 ro, Vec3 s);
 	~Object();
 
 	virtual void Init();
@@ -23,11 +25,12 @@ public:
 	Vec3 position;
 	Vec3 rotation;
 	Vec3 scale;
-private:
-	void LoadObject(char* filename);
+protected:
+	void LoadObject(const char* filename);
 	void ComputeNormal();
+	void Translate(Vec3 trans);
 	void SetNeighbor();
-private:
+protected:
 	vector<Vertex*> _vertices;
 	vector<Face*> _faces;
 };

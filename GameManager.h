@@ -20,8 +20,9 @@ public:
 	void Init();
 	void Update();
 	void Render();
-	void HandleInput(unsigned char key);
-	void HandleSpecialInput(int  key);
+	void HandleKeyInput(unsigned char key, int state);
+	void HandleSpecialInput(int  key, int state);
+	void HandleMouseInput(int x, int y, int state);
 private:
 	Camera* _mainCamera;
 	Player* _player;
