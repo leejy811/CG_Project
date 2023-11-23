@@ -18,7 +18,6 @@ public:
 	Object(const char* filename, Vec3 pos, Vec3 ro, Vec3 s);
 	~Object();
 
-	virtual void Init();
 	virtual void Update();
 	virtual void Render();
 public:
@@ -28,10 +27,9 @@ public:
 protected:
 	void LoadObject(const char* filename);
 	void ComputeNormal();
+	void SetTransform();
 	void Translate(Vec3 trans);
-	void SetNeighbor();
 protected:
-	vector<Vertex*> _vertices;
 	vector<Face*> _faces;
 };
 

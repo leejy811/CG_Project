@@ -11,9 +11,10 @@ class Enemy : public Character
 {
 public:
 	Enemy();
+	Enemy(const char* filename);
+	Enemy(const char* filename, Vec3 pos, Vec3 ro, Vec3 s);
 	~Enemy();
 
-	void Init();
 	void Update();
 	void Render();
 private:

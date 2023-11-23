@@ -11,6 +11,8 @@ Character::Character(const char* filename)
 	position = Vec3(0, 0, 0);
 	rotation = Vec3(0, 0, 0);
 	scale = Vec3(1, 1, 1);
+
+	_weapon = new Weapon();
 }
 
 Character::Character(const char* filename, Vec3 pos, Vec3 ro, Vec3 s)
@@ -19,14 +21,11 @@ Character::Character(const char* filename, Vec3 pos, Vec3 ro, Vec3 s)
 	position = pos;
 	rotation = ro;
 	scale = s;
+
+	_weapon = new Weapon();
 }
 
 Character::~Character()
-{
-
-}
-
-void Character::Init()
 {
 
 }

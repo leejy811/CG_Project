@@ -20,12 +20,11 @@ public:
 	Player(const char* filename, Vec3 pos, Vec3 ro, Vec3 s);
 	~Player();
 
-	void Init();
 	void Update();
 	void Render();
 	void HandleInput(unsigned char key, int state);
 	void HandleSpecialInput(int  key, int state);
-	void HandleMouseInput(int x, int y, int state);
+	void HandleMouseInput(int x, int y, int state, int clickState);
 private:
 
 };

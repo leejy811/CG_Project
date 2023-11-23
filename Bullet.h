@@ -11,13 +11,14 @@ class Bullet : public Object
 {
 public:
 	Bullet();
+	Bullet(Vec3 pos, Vec3 ro, Vec3 s, Vec3 target);
 	~Bullet();
 
-	void Init();
 	void Update();
 	void Render();
-private:
-
+public:
+	Vec3 targetVec;
+	double bulletSpeed = 3;
 };
 
 #endif

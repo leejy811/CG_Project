@@ -29,11 +29,6 @@ Object::~Object()
 
 }
 
-void Object::Init()
-{
-
-}
-
 void Object::Update()
 {
 
@@ -43,11 +38,7 @@ void Object::Render()
 {
 	glPushMatrix();
 
-	glScalef(scale.x(), scale.y(), scale.z());
-	glRotatef(rotation.x(), 1, 0, 0);
-	glRotatef(rotation.y(), 0, 1, 0);
-	glRotatef(rotation.z(), 0, 0, 1);
-	glTranslatef(position.x(), 0, position.z());
+	SetTransform();
 	for (auto f : _faces)
 	{
 		glBegin(GL_POLYGON);
@@ -59,8 +50,15 @@ void Object::Render()
 		glEnd();
 	}
 	glPopMatrix();
+}
 
-	//glutSolidTeapot(100);
+void Object::SetTransform()
+{
+	glScalef(scale.x(), scale.y(), scale.z());
+	glRotatef(rotation.x(), 1, 0, 0);
+	glRotatef(rotation.y(), 0, 1, 0);
+	glRotatef(rotation.z(), 0, 0, 1);
+	glTranslatef(position.x(), 0, position.z());
 }
 
 void Object::LoadObject(const char* filename)
@@ -85,7 +83,6 @@ void Object::LoadObject(const char* filename)
 		if (strcmp(header, "v") == 0)
 		{
 			vertices.push_back(Vec3(pos[0], pos[1], pos[2]));
-			_vertices.push_back(new Vertex(index++, Vec3(pos[0], pos[1], pos[2])));
 		}
 	}
 
@@ -130,7 +127,6 @@ void Object::LoadObject(const char* filename)
 	fclose(fp);
 
 	ComputeNormal();
-	//SetNeighbor();
 }
 
 
@@ -151,19 +147,3 @@ void Object::Translate(Vec3 trans)
 {
 	position += trans;
 }
-
-//void Object::SetNeighbor()
-//{
-//	for (auto v : _vertices)
-//	{
-//		v->_nbVertices.clear();
-//	}
-//
-//	for (auto f : _faces)
-//	{
-//		for (int j = 0; j < 3; j++)
-//		{
-//			f->_vertices[j]->_nbFaces.push_back(f);
-//		}
-//	}
-//}

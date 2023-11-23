@@ -1,9 +1,9 @@
 #include <gl/glut.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "GameManager.h"
-
-#define WIDTH 1600
-#define HEIGHT 900
+#include "bmpfuncs.h"
 
 GameManager* GM = new GameManager;
 
@@ -25,7 +25,7 @@ void init(void)
 	glEnable(GL_DEPTH_TEST);
 
 	GLfloat ambient_Sun[] = { 0.2f, 0.2f, 0.2f, 1.0f };
-	GLfloat diffuse_Sun[] = { 1.0f, 0.0f, 0.0f, 1.0f };
+	GLfloat diffuse_Sun[] = { 1.0f, 1.0f, 1.0f, 1.0f };
 	GLfloat specular_Sun[] = { 1.0f, 1.0f, 1.0f, 1.0f };
 	glMaterialfv(GL_FRONT, GL_AMBIENT, ambient_Sun);
 	glMaterialfv(GL_FRONT, GL_DIFFUSE, diffuse_Sun);
@@ -37,7 +37,6 @@ void init(void)
 
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
-
 	GM->Init();
 }
 
@@ -47,10 +46,10 @@ void draw(void)
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
-	glTranslatef(0, 0, -zoom);
+	/*glTranslatef(0, 0, -zoom);
 	glTranslatef(tx, ty, 0);
 	glRotatef(rotx, 1, 0, 0);
-	glRotatef(roty, 0, 1, 0);
+	glRotatef(roty, 0, 1, 0);*/
 
 	GM->Render();
 
@@ -103,6 +102,10 @@ void specialKeyboardUp(int key, int x, int y)
 
 void Motion(int x, int y)
 {
+	int mouseX = x - WIDTH / 2;
+	int mouseY = (HEIGHT - y) - HEIGHT / 2;
+	GM->HandleMouseInput(mouseX, mouseY, MOUSE_MOTION, -1);
+
 	int diffx = x - lastx;
 	int diffy = y - lasty;
 	lastx = x;
@@ -127,6 +130,11 @@ void Motion(int x, int y)
 
 void Mouse(int button, int state, int x, int y)
 {
+	int mouseX = x - WIDTH / 2;
+	int mouseY = (HEIGHT - y) - HEIGHT / 2;
+	if (button == GLUT_LEFT_BUTTON)
+		GM->HandleMouseInput(mouseX, mouseY, MOUSE_CLICK, state);
+
 	lastx = x;
 	lasty = y;
 	switch (button)
@@ -148,9 +156,9 @@ void Mouse(int button, int state, int x, int y)
 
 void PassiveMotion(int x, int y)
 {
-	int winX = x - WIDTH / 2;
-	int winY = (HEIGHT - y) - HEIGHT / 2;
-	GM->HandleMouseInput(winX, winY, MOUSE_MOTION);
+	int mouseX = x - WIDTH / 2;
+	int mouseY = (HEIGHT - y) - HEIGHT / 2;
+	GM->HandleMouseInput(mouseX, mouseY, MOUSE_MOTION, -1);
 }
 
 int main(int argc, char** argv)

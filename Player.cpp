@@ -12,6 +12,8 @@ Player::Player(const char* filename)
     position = Vec3(0, 0, 0);
     rotation = Vec3(0, 0, 0);
     scale = Vec3(1, 1, 1);
+
+    _weapon = new Weapon();
 }
 
 Player::Player(const char* filename, Vec3 pos, Vec3 ro, Vec3 s)
@@ -20,6 +22,8 @@ Player::Player(const char* filename, Vec3 pos, Vec3 ro, Vec3 s)
     position = pos;
     rotation = ro;
     scale = s;
+
+    _weapon = new Weapon();
 }
 
 Player::~Player()
@@ -27,19 +31,16 @@ Player::~Player()
 	
 }
 
-void Player::Init()
-{
-
-}
-
 void Player::Update()
 {
     Move();
+    _weapon->Update();
 }
 
 void Player::Render()
 {
 	Character::Render();
+    _weapon->Render();
 }
 
 void Player::HandleInput(unsigned char key, int state)
@@ -70,12 +71,12 @@ void Player::HandleSpecialInput(int  key, int state)
                 _moveDirection += Vec3(1, 0, 0);
             break;
         case GLUT_KEY_DOWN:
-            if ((_moveDirection + Vec3(0, 0, 1)).getNorm() <= _moveSpeed)
-                _moveDirection += Vec3(0, 0, 1);
-            break;
-        case GLUT_KEY_UP:
             if ((_moveDirection + Vec3(0, 0, -1)).getNorm() <= _moveSpeed)
                 _moveDirection += Vec3(0, 0, -1);
+            break;
+        case GLUT_KEY_UP:
+            if ((_moveDirection + Vec3(0, 0, 1)).getNorm() <= _moveSpeed)
+                _moveDirection += Vec3(0, 0, 1);
             break;
         }
     }
@@ -97,14 +98,19 @@ void Player::HandleSpecialInput(int  key, int state)
     glutPostRedisplay();
 }
 
-void Player::HandleMouseInput(int x, int y, int state)
+void Player::HandleMouseInput(int x, int y, int state, int clickState)
 {
+    rotation = Vec3(0, (atan2(y, x) / 3.141592) * 180 + 90, 0);
     if (state == MOUSE_MOTION)
     {
-        rotation = Vec3(0, (atan2(y, x) / 3.141592) * 180 - 90, 0);
+        
     }
     else if (state == MOUSE_CLICK)
     {
-
+        if (clickState == GLUT_DOWN)
+        {
+            Vec3 aim = Vec3(cos(((atan2(y, x) / 3.141592) * 180) * -1 * (3.141592 / 180)), 0, sin(((atan2(y, x) / 3.141592) * 180) * -1 * (3.141592 / 180)));
+            _weapon->Shoot(aim);
+        }
     }
 }

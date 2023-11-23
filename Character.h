@@ -4,6 +4,7 @@
 #pragma once
 
 #include "Object.h"
+#include "Weapon.h"
 
 using namespace std;
 
@@ -15,11 +16,12 @@ public:
 	Character(const char* filename, Vec3 pos, Vec3 ro, Vec3 s);
 	~Character();
 
-	virtual void Init();
 	virtual void Update();
 	virtual void Render();
 protected:
 	void Move();
+protected:
+	Weapon* _weapon;
 	Vec3 _moveDirection;
 	double _moveSpeed = 2.5;
 };
