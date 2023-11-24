@@ -38,6 +38,18 @@ void Object::Render()
 {
 	glPushMatrix();
 
+	ThisRender();
+
+	for (auto child : _childObjects)
+	{
+		child->ThisRender();
+	}
+
+	glPopMatrix();
+}
+
+void Object::ThisRender()
+{
 	SetTransform();
 	for (auto f : _faces)
 	{
@@ -49,16 +61,15 @@ void Object::Render()
 		}
 		glEnd();
 	}
-	glPopMatrix();
 }
 
 void Object::SetTransform()
 {
+	glTranslatef(position.x(), 0, position.z());
 	glScalef(scale.x(), scale.y(), scale.z());
 	glRotatef(rotation.x(), 1, 0, 0);
 	glRotatef(rotation.y(), 0, 1, 0);
 	glRotatef(rotation.z(), 0, 0, 1);
-	glTranslatef(position.x(), 0, position.z());
 }
 
 void Object::LoadObject(const char* filename)
@@ -78,40 +89,28 @@ void Object::LoadObject(const char* filename)
 	vector<Vec3> normals;
 
 	fopen_s(&fp, filename, "r");
-	while (fscanf(fp, "%s %lf %lf %lf", header, &pos[0], &pos[1], &pos[2]) != EOF)
+	while (1)
 	{
+		if (fscanf(fp, "%s", header) == EOF) break;
+
 		if (strcmp(header, "v") == 0)
 		{
+			fscanf(fp, "%lf %lf %lf", &pos[0], &pos[1], &pos[2]);
 			vertices.push_back(Vec3(pos[0], pos[1], pos[2]));
 		}
-	}
-
-	index = 0;
-	fseek(fp, 0, SEEK_SET);
-	while (fscanf(fp, "%s %lf %lf", header, &uv[0], &uv[1]) != EOF)
-	{
-		if (strcmp(header, "vt") == 0)
+		else if (strcmp(header, "vt") == 0)
 		{
+			fscanf(fp, "%lf %lf", &uv[0], &uv[1]);
 			uvs.push_back(Vec3(uv[0], uv[1], 0.0));
 		}
-	}
-
-	index = 0;
-	fseek(fp, 0, SEEK_SET);
-	while (fscanf(fp, "%s %lf %lf %lf", header, &normal[0], &normal[1], &normal[2]) != EOF)
-	{
-		if (strcmp(header, "vn") == 0)
+		else if (strcmp(header, "vn") == 0)
 		{
+			fscanf(fp, "%lf %lf %lf", &normal[0], &normal[1], &normal[2]);
 			normals.push_back(Vec3(normal[0], normal[1], normal[2]));
 		}
-	}
-
-	index = 0;
-	fseek(fp, 0, SEEK_SET);
-	while (fscanf(fp, "%s %d/%d/%d %d/%d/%d %d/%d/%d ", header, &v_index[0], &u_index[0], &n_index[0], &v_index[1], &u_index[1], &n_index[1], &v_index[2], &u_index[2], &n_index[2]) != EOF)
-	{
-		if (strcmp(header, "f") == 0)
+		else if (strcmp(header, "f") == 0)
 		{
+			fscanf(fp, "%d/%d/%d %d/%d/%d %d/%d/%d ", &v_index[0], &u_index[0], &n_index[0], &v_index[1], &u_index[1], &n_index[1], &v_index[2], &u_index[2], &n_index[2]);
 			auto v0 = vertices[v_index[0] - 1];
 			auto v1 = vertices[v_index[1] - 1];
 			auto v2 = vertices[v_index[2] - 1];

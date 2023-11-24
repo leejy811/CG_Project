@@ -27,10 +27,12 @@ public:
 protected:
 	void LoadObject(const char* filename);
 	void ComputeNormal();
+	void ThisRender();
 	void SetTransform();
 	void Translate(Vec3 trans);
 protected:
 	vector<Face*> _faces;
+	vector<Object*> _childObjects;
 };
 
 #endif

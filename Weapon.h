@@ -18,10 +18,11 @@ public:
 
 	void Update();
 	void Render();
-	void Shoot(Vec3 aim);
+	void Shoot(Vec3 playerPos, Vec3 aim);
+
+	vector<Bullet*> _bullets;
 protected:
 	Vec3 _bulletOffset;
-	vector<Bullet*> _bullets;
 };
 
 #endif

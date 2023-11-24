@@ -50,12 +50,19 @@ void UIManager::DrawMouse(int mouseSize)
 	}
 	glEnd();
 
+	glBegin(GL_LINE_LOOP);
+	for (int i = 0; i < 360; ++i)
+	{
+		glVertex2f(mouseSize * 0.2 * cos(i * (3.14152 / 180)), mouseSize * 0.2 * sin(i * (3.14152 / 180)));
+	}
+	glEnd();
+
 	glColor3f(1, 1, 1);
 	for (int i = 0; i < 4; i++)
 	{
 		glBegin(GL_LINES);
-		glVertex2f((mouseSize - mouseSize / 2) * cos(90 * i * (3.14152 / 180)), (mouseSize - mouseSize / 2) * sin(90 * i * (3.14152 / 180)));
-		glVertex2f((mouseSize + mouseSize / 2) * cos(90 * i * (3.14152 / 180)), (mouseSize + mouseSize / 2) * sin(90 * i * (3.14152 / 180)));
+		glVertex2f((mouseSize - mouseSize / 3) * cos(90 * i * (3.14152 / 180)), (mouseSize - mouseSize / 3) * sin(90 * i * (3.14152 / 180)));
+		glVertex2f((mouseSize + mouseSize / 3) * cos(90 * i * (3.14152 / 180)), (mouseSize + mouseSize / 3) * sin(90 * i * (3.14152 / 180)));
 		glEnd();
 	}
 }

@@ -14,6 +14,7 @@ Player::Player(const char* filename)
     scale = Vec3(1, 1, 1);
 
     _weapon = new Weapon();
+    _childObjects.push_back(_weapon);
 }
 
 Player::Player(const char* filename, Vec3 pos, Vec3 ro, Vec3 s)
@@ -23,7 +24,9 @@ Player::Player(const char* filename, Vec3 pos, Vec3 ro, Vec3 s)
     rotation = ro;
     scale = s;
 
+    _moveSpeed = 2.5;
     _weapon = new Weapon();
+    _childObjects.push_back(_weapon);
 }
 
 Player::~Player()
@@ -40,18 +43,58 @@ void Player::Update()
 void Player::Render()
 {
 	Character::Render();
-    _weapon->Render();
+
+    for (auto b : _weapon->_bullets)
+    {
+        b->Render();
+    }
 }
 
 void Player::HandleInput(unsigned char key, int state)
 {
     if (state == KEY_DOWN)     //Down
     {
-        
+        switch (key)
+        {
+        case 'A':
+        case 'a':
+            if ((_moveDirection + Vec3(-1, 0, 0)).getNorm() <= _moveSpeed)
+                _moveDirection += Vec3(-1, 0, 0);
+            break;
+        case 'D':
+        case 'd':
+            if ((_moveDirection + Vec3(1, 0, 0)).getNorm() <= _moveSpeed)
+                _moveDirection += Vec3(1, 0, 0);
+            break;
+        case 'W':
+        case 'w':
+            if ((_moveDirection + Vec3(0, 0, -1)).getNorm() <= _moveSpeed)
+                _moveDirection += Vec3(0, 0, -1);
+            break;
+        case 'S':
+        case 's':
+            if ((_moveDirection + Vec3(0, 0, 1)).getNorm() <= _moveSpeed)
+                _moveDirection += Vec3(0, 0, 1);
+            break;
+        }
     }
     else if (state == KEY_UP)    //Up
     {
-
+        switch (key)
+        {
+        case 'A':
+        case 'a':
+        case 'D':
+        case 'd':
+            _moveDirection = Vec3(0, 0, _moveDirection.z());
+            break;
+        case 'S':
+        case 's':
+        case 'W':
+        case 'w':
+            _moveDirection = Vec3(_moveDirection.x(), 0, 0);
+            break;
+        }
     }
 }
 
@@ -110,7 +153,7 @@ void Player::HandleMouseInput(int x, int y, int state, int clickState)
         if (clickState == GLUT_DOWN)
         {
             Vec3 aim = Vec3(cos(((atan2(y, x) / 3.141592) * 180) * -1 * (3.141592 / 180)), 0, sin(((atan2(y, x) / 3.141592) * 180) * -1 * (3.141592 / 180)));
-            _weapon->Shoot(aim);
+            _weapon->Shoot(position, aim);
         }
     }
 }

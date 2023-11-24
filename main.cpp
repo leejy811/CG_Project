@@ -2,11 +2,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <windows.h>
 #include "GameManager.h"
 #include "bmpfuncs.h"
 
-GameManager* GM = new GameManager;
-
+GameManager* GM = new GameManager();
 float zoom = 15.0f;
 float rotx = 0;
 float roty = 0.001f;
@@ -66,6 +66,7 @@ void draw(void)
 
 void idle(void) 
 {
+	ShowCursor(false);
 	GM->Update();
 	glutPostRedisplay();
 }
@@ -169,6 +170,17 @@ int main(int argc, char** argv)
 	glutInitWindowSize(WIDTH, HEIGHT);
 	glutInitWindowPosition(300, 300);
 	glutCreateWindow("My First GL Program");
+ 
+	//glutGameModeString("800x600:32");
+
+	//if (glutGameModeGet(GLUT_GAME_MODE_POSSIBLE))
+	//	glutEnterGameMode();
+	//else
+	//{
+	//	printf("The select mode is not available\n");
+	//	exit(1);
+	//}
+
 	init();
 	
 	//Callback

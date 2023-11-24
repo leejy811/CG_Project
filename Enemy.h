@@ -12,13 +12,17 @@ class Enemy : public Character
 public:
 	Enemy();
 	Enemy(const char* filename);
-	Enemy(const char* filename, Vec3 pos, Vec3 ro, Vec3 s);
+	Enemy(const char* filename, Vec3 pos, Vec3 ro, Vec3 s, Character& _target);
 	~Enemy();
 
 	void Update();
 	void Render();
+public:
+	bool isActive;
 private:
-
+	void UpdateMove();
+private:
+	Character* _target;
 };
 
 #endif

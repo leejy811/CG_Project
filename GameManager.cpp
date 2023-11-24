@@ -1,4 +1,7 @@
 #include "GameManager.h"
+#include "GL/freeglut.h"
+#include <stdlib.h>
+#include <time.h>
 
 GameManager::GameManager()
 {
@@ -12,13 +15,21 @@ GameManager::~GameManager()
 
 void GameManager::Init()
 {
+	srand(time(NULL));
+
 	_player = new Player("OBJ/Soldier.obj", Vec3(0, 0, 0), Vec3(0, 0, 0), Vec3(0.5, 0.5, 0.5));
 	_mainCamera = new Camera(Vec3(0, 500, 100), *_player);
 	_uiManager = new UIManager();
+
+	for (int i = 0; i < _enemyPoolSize; i++)
+	{
+		_enemies.push_back(new Enemy("OBJ/Soldier.obj", Vec3(0, 0, 0), Vec3(0, 0, 0), Vec3(0.5, 0.5, 0.5), *_player));
+	}
 }
 
 void GameManager::Update()
 {
+	SpawnEnemy();
 	_player->Update();
 	_mainCamera->Update();
 
@@ -54,4 +65,21 @@ void GameManager::HandleMouseInput(int x, int y, int state, int clickState)
 {
 	_uiManager->SetMousePositon(x, y);
 	_player->HandleMouseInput(x, y, state, clickState);
+}
+
+void GameManager::SpawnEnemy()
+{
+	int time = glutGet(GLUT_ELAPSED_TIME);
+
+	if (time - _curEnemySpawnTime > _enemySpawnCool)
+	{
+		if (_curEnemyIndex == _enemyPoolSize) return;
+		_curEnemySpawnTime = time;
+		_enemies[_curEnemyIndex]->isActive = true;
+
+		double angle = (double)(rand() % 360) * (3.14152 / 180);
+		_enemies[_curEnemyIndex]->position = Vec3(100 * cos(angle), 0, 100 * sin(angle));
+
+		_curEnemyIndex++;
+	}
 }

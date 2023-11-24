@@ -40,14 +40,9 @@ void Weapon::Update()
 void Weapon::Render()
 {
 	Object::Render();
-	
-	for (auto b : _bullets)
-	{
-		b->Render();
-	}
 }
 
-void Weapon::Shoot(Vec3 aim)
+void Weapon::Shoot(Vec3 playerPos, Vec3 aim)
 {
-	_bullets.push_back(new Bullet(position + _bulletOffset, Vec3(0, 0, 0), Vec3(1, 1, 1), aim));
+	_bullets.push_back(new Bullet(playerPos + position + _bulletOffset, Vec3(0, 0, 0), Vec3(1, 1, 1), aim));
 }

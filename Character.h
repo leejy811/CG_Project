@@ -23,7 +23,7 @@ protected:
 protected:
 	Weapon* _weapon;
 	Vec3 _moveDirection;
-	double _moveSpeed = 2.5;
+	double _moveSpeed;
 };
 
 #endif

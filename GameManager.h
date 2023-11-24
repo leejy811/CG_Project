@@ -12,6 +12,7 @@
 
 #define WIDTH 1600
 #define HEIGHT 900
+#define DELTA_TIME 0.2
 
 using namespace std;
 
@@ -28,10 +29,18 @@ public:
 	void HandleSpecialInput(int  key, int state);
 	void HandleMouseInput(int x, int y, int state, int clickState);
 private:
+	void SpawnEnemy();
+private:
 	Camera* _mainCamera;
 	Player* _player;
 	vector<Enemy*> _enemies;
 	UIManager* _uiManager;
+
+	//Enemy
+	int _curEnemyIndex = 0;
+	int _enemyPoolSize = 3;
+	int _enemySpawnCool = 3000;
+	int _curEnemySpawnTime;
 };
 
 #endif
