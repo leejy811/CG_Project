@@ -18,8 +18,8 @@ Object::Object(const char* filename)
 	scale = Vec3(1, 1, 1);
 }
 
-Object::Object (const char* filename, Vec3 pos, Vec3 ro, Vec3 s)
-	: position(pos), rotation(ro), scale(s)
+Object::Object (const char* filename, Vec3 pos, Vec3 ro, Vec3 s, double rad)
+	: position(pos), rotation(ro), scale(s), collisionRad(rad)
 {
 	LoadObject(filename);
 }
@@ -34,6 +34,11 @@ void Object::Update()
 
 }
 
+void Object::OnCollision(CollisonLayer layer)
+{
+
+}
+
 void Object::Render()
 {
 	glPushMatrix();
@@ -42,7 +47,7 @@ void Object::Render()
 
 	for (auto child : _childObjects)
 	{
-		child->ThisRender();
+		child->Render();
 	}
 
 	glPopMatrix();
@@ -124,7 +129,6 @@ void Object::LoadObject(const char* filename)
 		}
 	}
 	fclose(fp);
-
 	ComputeNormal();
 }
 
@@ -140,9 +144,4 @@ void Object::ComputeNormal()
 		normal.normalize();
 		f->_normal = normal;
 	}
-}
-
-void Object::Translate(Vec3 trans)
-{
-	position += trans;
 }

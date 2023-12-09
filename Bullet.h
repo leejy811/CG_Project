@@ -11,11 +11,12 @@ class Bullet : public Object
 {
 public:
 	Bullet();
-	Bullet(Vec3 pos, Vec3 ro, Vec3 s, Vec3 target);
+	Bullet(Vec3 pos, Vec3 ro, Vec3 s, Vec3 target, double rad);
 	~Bullet();
 
 	void Update();
 	void Render();
+	void OnCollision(CollisonLayer layer);
 public:
 	Vec3 targetVec;
 	double bulletSpeed = 3;

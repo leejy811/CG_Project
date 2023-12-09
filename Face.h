@@ -32,18 +32,6 @@ public:
 		_vertNormals.push_back(n2);
 	}
 	~Face() { }
-public:
-	//int		getIndex(Vertex* v)
-	//{
-	//	for (int i = 0; i < 3; i++)
-	//	{
-	//		if (_vertices[i] == v)
-	//		{
-	//			return i;
-	//		}
-	//	}
-	//	return -1;
-	//}
 };
 
 #endif

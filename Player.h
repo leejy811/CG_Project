@@ -17,11 +17,12 @@ class Player : public Character
 public:
 	Player();
 	Player(const char* filename);
-	Player(const char* filename, Vec3 pos, Vec3 ro, Vec3 s);
+	Player(const char* filename, Vec3 pos, Vec3 ro, Vec3 s, double rad, double h);
 	~Player();
 
 	void Update();
 	void Render();
+	void OnCollision(CollisonLayer layer);
 	void HandleInput(unsigned char key, int state);
 	void HandleSpecialInput(int  key, int state);
 	void HandleMouseInput(int x, int y, int state, int clickState);

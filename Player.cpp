@@ -17,12 +17,14 @@ Player::Player(const char* filename)
     _childObjects.push_back(_weapon);
 }
 
-Player::Player(const char* filename, Vec3 pos, Vec3 ro, Vec3 s)
+Player::Player(const char* filename, Vec3 pos, Vec3 ro, Vec3 s, double rad, double h)
 {
     LoadObject(filename);
     position = pos;
     rotation = ro;
     scale = s;
+    collisionRad = rad;
+    _health = h;
 
     _moveSpeed = 2.5;
     _weapon = new Weapon();
@@ -36,18 +38,19 @@ Player::~Player()
 
 void Player::Update()
 {
-    Move();
-    _weapon->Update();
+    if (!isActive) return;
+    Character::Update();
 }
 
 void Player::Render()
 {
+    if (!isActive) return;
 	Character::Render();
+}
 
-    for (auto b : _weapon->_bullets)
-    {
-        b->Render();
-    }
+void Player::OnCollision(CollisonLayer layer)
+{
+    if (!isActive) return;
 }
 
 void Player::HandleInput(unsigned char key, int state)

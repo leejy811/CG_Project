@@ -16,13 +16,17 @@ Enemy::Enemy(const char* filename)
 	_childObjects.push_back(_weapon);
 }
 
-Enemy::Enemy(const char* filename, Vec3 pos, Vec3 ro, Vec3 s, Character& tar)
+Enemy::Enemy(const char* filename, Vec3 pos, Vec3 ro, Vec3 s, Character& tar, double rad, double h)
 {
 	LoadObject(filename);
 	position = pos;
 	rotation = ro;
 	scale = s;
+	collisionRad = rad;
+	isActive = false;
+
 	_target = &tar;
+	_health = h;
 
 	_moveSpeed = 1;
 	_weapon = new Weapon();
@@ -39,8 +43,8 @@ void Enemy::Update()
 	if (!isActive) return;
 
 	UpdateMove();
-	Move();
-	_weapon->Update();
+
+	Character::Update();
 }
 
 void Enemy::Render()
@@ -48,11 +52,12 @@ void Enemy::Render()
 	if (!isActive) return;
 
 	Character::Render();
+}
 
-	for (auto b : _weapon->_bullets)
-	{
-		b->Render();
-	}
+void Enemy::OnCollision(CollisonLayer layer)
+{
+	if (!isActive) return;
+	Character::OnCollision(layer);
 }
 
 void Enemy::UpdateMove()

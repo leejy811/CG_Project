@@ -17,19 +17,20 @@ void GameManager::Init()
 {
 	srand(time(NULL));
 
-	_player = new Player("OBJ/Soldier.obj", Vec3(0, 0, 0), Vec3(0, 0, 0), Vec3(0.5, 0.5, 0.5));
+	_player = new Player("OBJ/Soldier.obj", Vec3(0, 0, 0), Vec3(0, 0, 0), Vec3(0.5, 0.5, 0.5), 50, 1);
 	_mainCamera = new Camera(Vec3(0, 500, 100), *_player);
 	_uiManager = new UIManager();
 
 	for (int i = 0; i < _enemyPoolSize; i++)
 	{
-		_enemies.push_back(new Enemy("OBJ/Soldier.obj", Vec3(0, 0, 0), Vec3(0, 0, 0), Vec3(0.5, 0.5, 0.5), *_player));
+		_enemies.push_back(new Enemy("OBJ/Soldier.obj", Vec3(0, 0, 0), Vec3(0, 0, 0), Vec3(0.5, 0.5, 0.5), *_player, 50, 1));
 	}
 }
 
 void GameManager::Update()
 {
 	SpawnEnemy();
+	DetectCollison();
 	_player->Update();
 	_mainCamera->Update();
 
@@ -81,5 +82,23 @@ void GameManager::SpawnEnemy()
 		_enemies[_curEnemyIndex]->position = Vec3(100 * cos(angle), 0, 100 * sin(angle));
 
 		_curEnemyIndex++;
+	}
+}
+
+void GameManager::DetectCollison()
+{
+	//Enemy-Bullet Collision
+	for (auto e : _enemies)
+	{
+		if (!e->isActive) continue;
+		for (auto b : _player->_weapon->_bullets)
+		{
+			double distance = (e->position - b->position).getNorm();
+			if (distance < e->collisionRad + b->collisionRad)
+			{
+				e->OnCollision(BULLET);
+				b->OnCollision(ENEMY);
+			}
+		}
 	}
 }

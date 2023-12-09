@@ -30,15 +30,16 @@ public:
 	void HandleMouseInput(int x, int y, int state, int clickState);
 private:
 	void SpawnEnemy();
+	void DetectCollison();
 private:
 	Camera* _mainCamera;
+	UIManager* _uiManager;
 	Player* _player;
 	vector<Enemy*> _enemies;
-	UIManager* _uiManager;
 
 	//Enemy
 	int _curEnemyIndex = 0;
-	int _enemyPoolSize = 3;
+	int _enemyPoolSize = 10;
 	int _enemySpawnCool = 3000;
 	int _curEnemySpawnTime;
 };
