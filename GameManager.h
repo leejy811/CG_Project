@@ -39,7 +39,7 @@ private:
 
 	//Enemy
 	int _curEnemyIndex = 0;
-	int _enemyPoolSize = 10;
+	int _enemyPoolSize = 1;
 	int _enemySpawnCool = 3000;
 	int _curEnemySpawnTime;
 };

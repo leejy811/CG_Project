@@ -19,7 +19,7 @@ public:
 	void Update();
 	void Render();
 	void Shoot(Vec3 playerPos, Vec3 aim);
-
+public:
 	vector<Bullet*> _bullets;
 protected:
 	Vec3 _bulletOffset;

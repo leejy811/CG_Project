@@ -29,12 +29,19 @@ Object::~Object()
 
 }
 
+void Object::Init(Vec3 pos, Vec3 ro, Vec3 s, double rad) {
+	position = pos;
+	rotation = ro;
+	scale = s;
+	collisionRad = rad;
+}
+
 void Object::Update()
 {
 
 }
 
-void Object::OnCollision(CollisonLayer layer)
+void Object::OnCollision(CollisonLayer layer, bool isEnter)
 {
 
 }

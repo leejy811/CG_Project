@@ -13,12 +13,13 @@ class Character : public Object
 public:
 	Character();
 	Character(const char* filename);
-	Character(const char* filename, Vec3 pos, Vec3 ro, Vec3 s, double rad, double h);
+	Character(const char* filename, Vec3 pos, Vec3 ro, Vec3 s, double rad, double h, double ms);
 	~Character();
 
+	virtual void Init(Vec3 pos, Vec3 ro, Vec3 s, double rad, double h, double ms);
 	virtual void Update();
 	virtual void Render();
-	virtual void OnCollision(CollisonLayer layer);
+	virtual void OnCollision(CollisonLayer layer, bool isEnter);
 
 	Weapon* _weapon;
 protected:

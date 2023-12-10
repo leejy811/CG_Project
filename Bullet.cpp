@@ -10,16 +10,17 @@ Bullet::Bullet()
 
 Bullet::Bullet(Vec3 pos, Vec3 ro, Vec3 s, Vec3 target, double rad)
 {
-	position = pos;
-	rotation = ro;
-	scale = s;
-	targetVec = target;
-	collisionRad = rad;
+	Init(pos, ro, s, target, rad);
 }
 
 Bullet::~Bullet()
 {
 
+}
+
+void Bullet::Init(Vec3 pos, Vec3 ro, Vec3 s, Vec3 target, double rad) {
+	Object::Init(pos, ro, s, rad);
+	targetVec = target;
 }
 
 void Bullet::Update()
@@ -41,11 +42,11 @@ void Bullet::Render()
 	glPopMatrix();
 }
 
-void Bullet::OnCollision(CollisonLayer layer)
+void Bullet::OnCollision(CollisonLayer layer, bool isEnter)
 {
 	if (!isActive) return;
 
-	if (layer == ENEMY)
+	if (layer == CHARACTER)
 	{
 		isActive = false;
 	}

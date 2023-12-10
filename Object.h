@@ -12,9 +12,8 @@ using namespace std;
 
 enum CollisonLayer
 {
-	PLAYER,
-	ENEMY,
-	BULLET
+	BULLET,
+	CHARACTER
 };
 
 class Object
@@ -25,9 +24,10 @@ public:
 	Object(const char* filename, Vec3 pos, Vec3 ro, Vec3 s, double rad);
 	~Object();
 
+	virtual void Init(Vec3 pos, Vec3 ro, Vec3 s, double rad);
 	virtual void Update();
 	virtual void Render();
-	virtual void OnCollision(CollisonLayer layer);
+	virtual void OnCollision(CollisonLayer layer, bool isEnter);
 public:
 	Vec3 position;
 	Vec3 rotation;

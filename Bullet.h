@@ -14,9 +14,10 @@ public:
 	Bullet(Vec3 pos, Vec3 ro, Vec3 s, Vec3 target, double rad);
 	~Bullet();
 
+	void Init(Vec3 pos, Vec3 ro, Vec3 s, Vec3 target, double rad);
 	void Update();
 	void Render();
-	void OnCollision(CollisonLayer layer);
+	void OnCollision(CollisonLayer layer, bool isEnter);
 public:
 	Vec3 targetVec;
 	double bulletSpeed = 3;

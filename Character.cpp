@@ -15,21 +15,24 @@ Character::Character(const char* filename)
 	_weapon = new Weapon();
 }
 
-Character::Character(const char* filename, Vec3 pos, Vec3 ro, Vec3 s, double rad, double h)
+Character::Character(const char* filename, Vec3 pos, Vec3 ro, Vec3 s, double rad, double h, double ms)
 {
 	LoadObject(filename);
-	position = pos;
-	rotation = ro;
-	scale = s;
-	collisionRad = rad;
-	_health = h;
+	Init(pos, ro, s, rad, h, ms);
 
 	_weapon = new Weapon();
+	_childObjects.push_back(_weapon);
 }
 
 Character::~Character()
 {
 
+}
+
+void Character::Init(Vec3 pos, Vec3 ro, Vec3 s, double rad, double h, double ms) {
+	Object::Init(pos, ro, s, rad);
+	_moveSpeed = ms;
+	_health = h;
 }
 
 void Character::Update()
@@ -48,7 +51,7 @@ void Character::Render()
 	}
 }
 
-void Character::OnCollision(CollisonLayer layer)
+void Character::OnCollision(CollisonLayer layer, bool isEnter)
 {
 	if (layer == BULLET)
 		OnDamage();

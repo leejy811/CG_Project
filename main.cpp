@@ -168,7 +168,7 @@ int main(int argc, char** argv)
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
 	glutInitWindowSize(WIDTH, HEIGHT);
-	glutInitWindowPosition(300, 300);
+	glutInitWindowPosition(0, 0);
 	glutCreateWindow("My First GL Program");
  
 	//glutGameModeString("800x600:32");
