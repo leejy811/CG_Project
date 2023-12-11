@@ -8,6 +8,7 @@
 #include "Player.h"
 #include "Bullet.h"
 #include "UIManager.h"
+#include "MapTile.h"
 #include <vector>
 
 #define WIDTH 1600
@@ -37,6 +38,7 @@ private:
 	UIManager* _uiManager;
 	Player* _player;
 	vector<Enemy*> _enemies;
+	vector<MapTile*> _mapTiles;
 
 	//Enemy
 	int _curEnemyIndex = 0;

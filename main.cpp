@@ -56,13 +56,6 @@ void draw(void)
 
 	GM->Render();
 
-	glBegin(GL_QUADS);
-	glVertex3f(-1000.0f, 0.0f, -1000.0f);
-	glVertex3f(-1000.0f, 0.0f, 1000.0f);
-	glVertex3f(1000.0f, 0.0f, 1000.0f);
-	glVertex3f(1000.0f, 0.0f, -1000.0f);
-	glEnd();
-
 	glFlush();
 	glutSwapBuffers();
 }

@@ -25,6 +25,11 @@ void GameManager::Init()
 	{
 		_enemies.push_back(new Enemy("OBJ/Soldier.obj", Vec3(0, 0, 0), Vec3(0, 0, 0), Vec3(0.5, 0.5, 0.5), *_player, 20, 1, 1));
 	}
+
+	_mapTiles.push_back(new MapTile(500, *_player, Vec3(1, 0, 1)));
+	_mapTiles.push_back(new MapTile(500, *_player, Vec3(1, 0, -1)));
+	_mapTiles.push_back(new MapTile(500, *_player, Vec3(-1, 0, 1)));
+	_mapTiles.push_back(new MapTile(500, *_player, Vec3(-1, 0, -1)));
 }
 
 void GameManager::Update(double dt)
@@ -37,6 +42,11 @@ void GameManager::Update(double dt)
 	for (auto e : _enemies)
 	{
 		e->Update(dt);
+	}
+
+	for (auto m : _mapTiles)
+	{
+		m->Update();
 	}
 }
 
@@ -53,6 +63,11 @@ void GameManager::Render()
 	for (auto e : _enemies)
 	{
 		e->Render();
+	}
+
+	for (auto m : _mapTiles)
+	{
+		m->Render();
 	}
 }
 
@@ -148,6 +163,7 @@ void GameManager::DrawMinimap()
 
 	for (auto e : _enemies)
 	{
+		if (!e->isActive) continue;
 		e->MinimapRender(1, 0, 0, 20);
 	}
 
