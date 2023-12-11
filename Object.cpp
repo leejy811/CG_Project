@@ -36,7 +36,7 @@ void Object::Init(Vec3 pos, Vec3 ro, Vec3 s, double rad) {
 	collisionRad = rad;
 }
 
-void Object::Update()
+void Object::Update(double dt)
 {
 
 }

@@ -17,7 +17,7 @@ void GameManager::Init()
 {
 	srand(time(NULL));
 
-	_player = new Player("OBJ/Soldier.obj", Vec3(0, 0, 0), Vec3(0, 0, 0), Vec3(0.5, 0.5, 0.5), 20, 3, 2.5);
+	_player = new Player("OBJ/Soldier.obj", Vec3(0, 0, 0), Vec3(0, 0, 0), Vec3(0.5, 0.5, 0.5), 20, 1000, 3);
 	_mainCamera = new Camera(Vec3(0, 500, 100), *_player);
 	_uiManager = new UIManager();
 
@@ -27,16 +27,16 @@ void GameManager::Init()
 	}
 }
 
-void GameManager::Update()
+void GameManager::Update(double dt)
 {
-	SpawnEnemy();
+	SpawnEnemy(dt);
 	DetectCollison();
-	_player->Update();
+	_player->Update(dt);
 	_mainCamera->Update();
 
 	for (auto e : _enemies)
 	{
-		e->Update();
+		e->Update(dt);
 	}
 }
 
@@ -68,11 +68,11 @@ void GameManager::HandleMouseInput(int x, int y, int state, int clickState)
 	_player->HandleMouseInput(x, y, state, clickState);
 }
 
-void GameManager::SpawnEnemy()
+void GameManager::SpawnEnemy(double dt)
 {
 	int time = glutGet(GLUT_ELAPSED_TIME);
 
-	if (time - _curEnemySpawnTime > _enemySpawnCool)
+	if (time - _curEnemySpawnTime > _enemySpawnCool * (1.0 / dt))
 	{
 		if (_curEnemyIndex == _enemyPoolSize) return;
 		_curEnemySpawnTime = time;

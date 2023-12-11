@@ -36,14 +36,14 @@ void Enemy::Init(Vec3 pos, Vec3 ro, Vec3 s, Character& tar, double rad, double h
 	_target = &tar;
 }
 
-void Enemy::Update()
+void Enemy::Update(double dt)
 {
 	if (!isActive) return;
 
 	UpdateMove();
-	AutoShoot();
+	AutoShoot(dt);
 
-	Character::Update();
+	Character::Update(dt);
 }
 
 void Enemy::Render()
@@ -76,11 +76,11 @@ void Enemy::UpdateMove()
 	_moveDirection *= _moveSpeed;
 }
 
-void Enemy::AutoShoot()
+void Enemy::AutoShoot(double dt)
 {
 	int time = glutGet(GLUT_ELAPSED_TIME);
 
-	if (time - _curShootTime > _shootCoolTime)
+	if (time - _curShootTime > _shootCoolTime * (1.0 / dt))
 	{
 		_curShootTime = time;
 		_weapon->Shoot(position, _target->position - position);

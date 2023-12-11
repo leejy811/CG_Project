@@ -16,6 +16,14 @@ int lastx = 0;
 int lasty = 0;
 unsigned char Buttons[3] = { 0 };
 
+double curTime;
+double prevTime;
+double frameTime = 20;
+double slowDeltaTime = 1;
+double fastDeltaTime = 5;
+
+bool isMove = false;
+
 void init(void)
 {
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
@@ -67,8 +75,16 @@ void draw(void)
 void idle(void) 
 {
 	ShowCursor(false);
-	GM->Update();
-	glutPostRedisplay();
+
+	curTime = glutGet(GLUT_ELAPSED_TIME);
+	if (curTime - prevTime > frameTime)
+	{
+		int dt = isMove ? fastDeltaTime : slowDeltaTime;
+		prevTime = curTime;
+
+		GM->Update(dt);
+		glutPostRedisplay();
+	}
 }
 
 void resize(int width, int height)
@@ -82,21 +98,69 @@ void resize(int width, int height)
 
 void keyboardDown(unsigned char key, int x, int y)
 {
+	switch (key)
+	{
+	case 'A':
+	case 'a':
+	case 'D':
+	case 'd':
+	case 'W':
+	case 'w':
+	case 'S':
+	case 's':
+		isMove = true;
+		break;
+	}
+
 	GM->HandleKeyInput(key, KEY_DOWN);
 }
 
 void keyboardUp(unsigned char key, int x, int y)
 {
+	switch (key)
+	{
+	case 'A':
+	case 'a':
+	case 'D':
+	case 'd':
+	case 'W':
+	case 'w':
+	case 'S':
+	case 's':
+		isMove = false;
+		break;
+	}
+
 	GM->HandleKeyInput(key, KEY_UP);
 }
 
 void specialKeyboardDown(int key, int x, int y)
 {
+	switch (key)
+	{
+	case GLUT_KEY_LEFT:
+	case GLUT_KEY_RIGHT:
+	case GLUT_KEY_DOWN:
+	case GLUT_KEY_UP:
+		isMove = true;
+		break;
+	}
+
 	GM->HandleSpecialInput(key, KEY_DOWN);
 }
 
 void specialKeyboardUp(int key, int x, int y)
 {
+	switch (key)
+	{
+	case GLUT_KEY_LEFT:
+	case GLUT_KEY_RIGHT:
+	case GLUT_KEY_DOWN:
+	case GLUT_KEY_UP:
+		isMove = false;
+		break;
+	}
+
 	GM->HandleSpecialInput(key, KEY_UP);
 }
 
@@ -168,7 +232,7 @@ int main(int argc, char** argv)
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
 	glutInitWindowSize(WIDTH, HEIGHT);
-	glutInitWindowPosition(0, 0);
+	glutInitWindowPosition(300, 300);
 	glutCreateWindow("My First GL Program");
  
 	//glutGameModeString("800x600:32");

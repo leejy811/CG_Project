@@ -23,13 +23,13 @@ public:
 	~GameManager();
 
 	void Init();
-	void Update();
+	void Update(double dt);
 	void Render();
 	void HandleKeyInput(unsigned char key, int state);
 	void HandleSpecialInput(int  key, int state);
 	void HandleMouseInput(int x, int y, int state, int clickState);
 private:
-	void SpawnEnemy();
+	void SpawnEnemy(double dt);
 	void DetectCollison();
 private:
 	Camera* _mainCamera;
@@ -39,8 +39,8 @@ private:
 
 	//Enemy
 	int _curEnemyIndex = 0;
-	int _enemyPoolSize = 1;
-	int _enemySpawnCool = 3000;
+	int _enemyPoolSize = 10;
+	int _enemySpawnCool = 15000;
 	int _curEnemySpawnTime;
 };
 

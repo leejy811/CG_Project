@@ -21,7 +21,7 @@ public:
 	~Player();
 
 	void Init(Vec3 pos, Vec3 ro, Vec3 s, double rad, double h, double ms);
-	void Update();
+	void Update(double dt);
 	void Render();
 	void OnCollision(CollisonLayer layer, bool isEnter);
 	void HandleInput(unsigned char key, int state);

@@ -17,13 +17,13 @@ public:
 	~Character();
 
 	virtual void Init(Vec3 pos, Vec3 ro, Vec3 s, double rad, double h, double ms);
-	virtual void Update();
+	virtual void Update(double dt);
 	virtual void Render();
 	virtual void OnCollision(CollisonLayer layer, bool isEnter);
 
 	Weapon* _weapon;
 protected:
-	void Move();
+	void Move(double dt);
 	void OnDamage();
 protected:
 	Vec3 _moveDirection;

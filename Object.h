@@ -25,7 +25,7 @@ public:
 	~Object();
 
 	virtual void Init(Vec3 pos, Vec3 ro, Vec3 s, double rad);
-	virtual void Update();
+	virtual void Update(double dt);
 	virtual void Render();
 	virtual void OnCollision(CollisonLayer layer, bool isEnter);
 public:

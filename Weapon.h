@@ -16,7 +16,7 @@ public:
 	Weapon(const char* filename, Vec3 pos, Vec3 ro, Vec3 s);
 	~Weapon();
 
-	void Update();
+	void Update(double dt);
 	void Render();
 	void Shoot(Vec3 playerPos, Vec3 aim);
 public:

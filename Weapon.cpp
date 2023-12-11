@@ -30,11 +30,11 @@ Weapon::~Weapon()
 
 }
 
-void Weapon::Update()
+void Weapon::Update(double dt)
 {
 	for (auto b : _bullets)
 	{
-		b->Update();
+		b->Update(dt);
 	}
 }
 

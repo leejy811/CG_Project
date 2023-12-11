@@ -15,12 +15,12 @@ public:
 	~Bullet();
 
 	void Init(Vec3 pos, Vec3 ro, Vec3 s, Vec3 target, double rad);
-	void Update();
+	void Update(double dt);
 	void Render();
 	void OnCollision(CollisonLayer layer, bool isEnter);
 public:
 	Vec3 targetVec;
-	double bulletSpeed = 3;
+	double bulletSpeed = 2;
 };
 
 #endif

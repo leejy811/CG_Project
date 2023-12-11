@@ -23,11 +23,11 @@ void Bullet::Init(Vec3 pos, Vec3 ro, Vec3 s, Vec3 target, double rad) {
 	targetVec = target;
 }
 
-void Bullet::Update()
+void Bullet::Update(double dt)
 {
 	if (!isActive) return;
 
-	position += targetVec * bulletSpeed;
+	position += targetVec * bulletSpeed * dt;
 }
 
 void Bullet::Render()

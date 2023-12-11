@@ -16,15 +16,15 @@ public:
 	~Enemy();
 
 	void Init(Vec3 pos, Vec3 ro, Vec3 s, Character& tar, double rad, double h, double ms);
-	void Update();
+	void Update(double dt);
 	void Render();
 	void OnCollision(CollisonLayer layer, bool isEnter);
 private:
 	void UpdateMove();
-	void AutoShoot();
+	void AutoShoot(double dt);
 private:
 	Character* _target;
-	double _shootCoolTime = 1000;
+	double _shootCoolTime = 5000;
 	double _curShootTime;
 	bool _isMove = true;
 };

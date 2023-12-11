@@ -34,10 +34,10 @@ void Player::Init(Vec3 pos, Vec3 ro, Vec3 s, double rad, double h, double ms) {
     Character::Init(pos, ro, s, rad, h, ms);
 }
 
-void Player::Update()
+void Player::Update(double dt)
 {
     if (!isActive) return;
-    Character::Update();
+    Character::Update(dt);
 }
 
 void Player::Render()
@@ -60,23 +60,23 @@ void Player::HandleInput(unsigned char key, int state)
         {
         case 'A':
         case 'a':
-            if ((_moveDirection + Vec3(-1, 0, 0)).getNorm() <= _moveSpeed)
-                _moveDirection += Vec3(-1, 0, 0);
+            if ((_moveDirection + Vec3(-2, 0, 0)).getNorm() <= _moveSpeed)
+                _moveDirection += Vec3(-2, 0, 0);
             break;
         case 'D':
         case 'd':
-            if ((_moveDirection + Vec3(1, 0, 0)).getNorm() <= _moveSpeed)
-                _moveDirection += Vec3(1, 0, 0);
+            if ((_moveDirection + Vec3(2, 0, 0)).getNorm() <= _moveSpeed)
+                _moveDirection += Vec3(2, 0, 0);
             break;
         case 'W':
         case 'w':
-            if ((_moveDirection + Vec3(0, 0, -1)).getNorm() <= _moveSpeed)
-                _moveDirection += Vec3(0, 0, -1);
+            if ((_moveDirection + Vec3(0, 0, -2)).getNorm() <= _moveSpeed)
+                _moveDirection += Vec3(0, 0, -2);
             break;
         case 'S':
         case 's':
-            if ((_moveDirection + Vec3(0, 0, 1)).getNorm() <= _moveSpeed)
-                _moveDirection += Vec3(0, 0, 1);
+            if ((_moveDirection + Vec3(0, 0, 2)).getNorm() <= _moveSpeed)
+                _moveDirection += Vec3(0, 0, 2);
             break;
         }
     }

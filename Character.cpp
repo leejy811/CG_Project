@@ -35,10 +35,10 @@ void Character::Init(Vec3 pos, Vec3 ro, Vec3 s, double rad, double h, double ms)
 	_health = h;
 }
 
-void Character::Update()
+void Character::Update(double dt)
 {
-	Move();
-	_weapon->Update();
+	Move(dt);
+	_weapon->Update(dt);
 }
 
 void Character::Render()
@@ -57,9 +57,9 @@ void Character::OnCollision(CollisonLayer layer, bool isEnter)
 		OnDamage();
 }
 
-void Character::Move()
+void Character::Move(double dt)
 {
-	position += _moveDirection;
+	position += _moveDirection * dt;
 }
 
 void Character::OnDamage()
