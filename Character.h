@@ -19,6 +19,7 @@ public:
 	virtual void Init(Vec3 pos, Vec3 ro, Vec3 s, double rad, double h, double ms);
 	virtual void Update(double dt);
 	virtual void Render();
+	virtual void MinimapRender(float red, float green, float blue, float size);
 	virtual void OnCollision(CollisonLayer layer, bool isEnter);
 
 	Weapon* _weapon;

@@ -23,6 +23,7 @@ public:
 	void Init(Vec3 pos, Vec3 ro, Vec3 s, double rad, double h, double ms);
 	void Update(double dt);
 	void Render();
+	void MinimapRender(float red, float green, float blue, float size);
 	void OnCollision(CollisonLayer layer, bool isEnter);
 	void HandleInput(unsigned char key, int state);
 	void HandleSpecialInput(int  key, int state);

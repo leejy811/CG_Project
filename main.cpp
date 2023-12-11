@@ -54,11 +54,6 @@ void draw(void)
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
-	//glTranslatef(0, 0, -zoom);
-	//glTranslatef(tx, ty, 0);
-	//glRotatef(rotx, 1, 0, 0);
-	//glRotatef(roty, 0, 1, 0);
-
 	GM->Render();
 
 	glBegin(GL_QUADS);

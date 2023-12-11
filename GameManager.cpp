@@ -42,6 +42,10 @@ void GameManager::Update(double dt)
 
 void GameManager::Render()
 {
+	DrawMinimap();
+
+	glViewport(0, 0, WIDTH, HEIGHT);
+	glLoadIdentity();
 	_mainCamera->SetViewMatrix();
 	_uiManager->Render();
 	_player->Render();
@@ -131,4 +135,21 @@ void GameManager::DetectCollison()
 			e->OnCollision(CHARACTER, false);
 		}
 	}
+}
+
+void GameManager::DrawMinimap()
+{
+	glViewport(WIDTH * (55.0 / 64.0), HEIGHT * (3.0 / 4.0), WIDTH * (9.0 / 64.0), HEIGHT / 5);
+
+	glLoadIdentity();
+	_mainCamera->SetViewMatrix();
+
+	_player->MinimapRender(0, 1, 0, 30);
+
+	for (auto e : _enemies)
+	{
+		e->MinimapRender(1, 0, 0, 20);
+	}
+
+	glFlush();
 }

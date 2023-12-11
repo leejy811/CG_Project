@@ -31,6 +31,7 @@ void UIManager::Render()
 	glPopMatrix();
 	glMatrixMode(GL_MODELVIEW);
 	glPopAttrib();
+	glFlush();
 }
 
 void UIManager::SetMousePositon(int x, int y)

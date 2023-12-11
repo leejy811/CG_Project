@@ -53,6 +53,11 @@ void Enemy::Render()
 	Character::Render();
 }
 
+void Enemy::MinimapRender(float red, float green, float blue, float size)
+{
+	Character::MinimapRender(red, green, blue, size);
+}
+
 void Enemy::OnCollision(CollisonLayer layer, bool isEnter)
 {
 	if (!isActive) return;

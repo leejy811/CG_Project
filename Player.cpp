@@ -46,6 +46,11 @@ void Player::Render()
 	Character::Render();
 }
 
+void Player::MinimapRender(float red, float green, float blue, float size)
+{
+    Character::MinimapRender(red, green, blue, size);
+}
+
 void Player::OnCollision(CollisonLayer layer, bool isEnter)
 {
     if (!isActive) return;

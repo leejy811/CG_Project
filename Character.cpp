@@ -1,4 +1,5 @@
 #include "Character.h"
+#include "GL/freeglut.h"
 
 Character::Character()
 {
@@ -49,6 +50,18 @@ void Character::Render()
 	{
 		b->Render();
 	}
+}
+
+void Character::MinimapRender(float red, float green, float blue, float size)
+{
+	glPushMatrix();
+
+	SetTransform();
+
+	glColor3f(red, green, blue);
+	glutSolidSphere(size, 10, 10);
+
+	glPopMatrix();
 }
 
 void Character::OnCollision(CollisonLayer layer, bool isEnter)

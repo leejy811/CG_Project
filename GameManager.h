@@ -31,6 +31,7 @@ public:
 private:
 	void SpawnEnemy(double dt);
 	void DetectCollison();
+	void DrawMinimap();
 private:
 	Camera* _mainCamera;
 	UIManager* _uiManager;
