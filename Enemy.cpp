@@ -88,6 +88,6 @@ void Enemy::AutoShoot(double dt)
 	if (time - _curShootTime > _shootCoolTime * (1.0 / dt))
 	{
 		_curShootTime = time;
-		_weapon->Shoot(position, _target->position - position);
+		_weapon->Shoot(position, _target->position - position, true);
 	}
 }

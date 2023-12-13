@@ -43,8 +43,12 @@ void Weapon::Render()
 	Object::Render();
 }
 
-void Weapon::Shoot(Vec3 playerPos, Vec3 aim)
+void Weapon::Shoot(Vec3 playerPos, Vec3 aim, bool isAuto)
 {
+	if (!isAuto && ammo <= 0) return;
+
+	ammo--;
+
 	aim.normalize();
 	for (auto b : _bullets) {
 		if (b->isActive == false) {

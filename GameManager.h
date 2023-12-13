@@ -20,9 +20,15 @@ using namespace std;
 class GameManager
 {
 public:
-	GameManager();
-	~GameManager();
+	static GameManager* GetInstance()
+	{
+		if (_instance == NULL)
+		{
+			_instance = new GameManager();
+		}
 
+		return _instance;
+	}
 	void Init();
 	void Update(double dt);
 	void Render();
@@ -30,10 +36,16 @@ public:
 	void HandleSpecialInput(int  key, int state);
 	void HandleMouseInput(int x, int y, int state, int clickState);
 private:
+	GameManager();
+	GameManager(const GameManager& other);
+	~GameManager();
+
 	void SpawnEnemy(double dt);
 	void DetectCollison();
 	void DrawMinimap();
 private:
+	static GameManager* _instance;
+
 	Camera* _mainCamera;
 	UIManager* _uiManager;
 	Player* _player;

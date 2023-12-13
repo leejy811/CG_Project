@@ -14,6 +14,7 @@ Player::Player(const char* filename)
     scale = Vec3(1, 1, 1);
 
     _weapon = new Weapon();
+    _weapon->ammo = 30;
     _childObjects.push_back(_weapon);
 }
 
@@ -22,6 +23,7 @@ Player::Player(const char* filename, Vec3 pos, Vec3 ro, Vec3 s, double rad, doub
     LoadObject(filename);
     Init(pos, ro, s, rad, h, ms);
     _weapon = new Weapon();
+    _weapon->ammo = 30;
     _childObjects.push_back(_weapon);
 }
 
@@ -160,7 +162,7 @@ void Player::HandleMouseInput(int x, int y, int state, int clickState)
         if (clickState == GLUT_DOWN)
         {
             Vec3 aim = Vec3(cos(((atan2(y, x) / 3.141592) * 180) * -1 * (3.141592 / 180)), 0, sin(((atan2(y, x) / 3.141592) * 180) * -1 * (3.141592 / 180)));
-            _weapon->Shoot(position, aim);
+            _weapon->Shoot(position, aim, false);
         }
     }
 }

@@ -18,9 +18,10 @@ public:
 
 	void Update(double dt);
 	void Render();
-	void Shoot(Vec3 playerPos, Vec3 aim);
+	void Shoot(Vec3 playerPos, Vec3 aim, bool isAuto);
 public:
 	vector<Bullet*> _bullets;
+	int ammo;
 protected:
 	Vec3 _bulletOffset;
 };

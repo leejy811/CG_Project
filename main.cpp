@@ -6,7 +6,7 @@
 #include "GameManager.h"
 #include "bmpfuncs.h"
 
-GameManager* GM = new GameManager();
+GameManager* GM = GameManager::GetInstance();
 float zoom = 15.0f;
 float rotx = 0;
 float roty = 0.001f;

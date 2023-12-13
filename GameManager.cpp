@@ -3,7 +3,14 @@
 #include <stdlib.h>
 #include <time.h>
 
+GameManager* GameManager::_instance = nullptr;
+
 GameManager::GameManager()
+{
+
+}
+
+GameManager::GameManager(const GameManager& other)
 {
 
 }
