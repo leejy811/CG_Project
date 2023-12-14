@@ -4,12 +4,6 @@
 
 Enemy::Enemy()
 {
-
-}
-
-Enemy::Enemy(const char* filename)
-{
-	LoadObject(filename);
 	position = Vec3(0, 0, 0);
 	rotation = Vec3(0, 0, 0);
 	scale = Vec3(1, 1, 1);
@@ -18,12 +12,9 @@ Enemy::Enemy(const char* filename)
 	_childObjects.push_back(_weapon);
 }
 
-Enemy::Enemy(const char* filename, Vec3 pos, Vec3 ro, Vec3 s, Character& tar, double rad, double h, double ms)
+Enemy::Enemy(Vec3 pos, Vec3 ro, Vec3 s, Character& tar, double rad, double h, double ms)
 {
-	LoadObject(filename);
 	Init(pos, ro, s, tar, rad, h, ms);
-	_weapon = new Weapon();
-	_childObjects.push_back(_weapon);
 }
 
 Enemy::~Enemy()

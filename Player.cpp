@@ -3,12 +3,6 @@
 
 Player::Player()
 {
-	
-}
-
-Player::Player(const char* filename)
-{
-    LoadObject(filename);
     position = Vec3(0, 0, 0);
     rotation = Vec3(0, 0, 0);
     scale = Vec3(1, 1, 1);
@@ -18,13 +12,10 @@ Player::Player(const char* filename)
     _childObjects.push_back(_weapon);
 }
 
-Player::Player(const char* filename, Vec3 pos, Vec3 ro, Vec3 s, double rad, double h, double ms)
+Player::Player(Vec3 pos, Vec3 ro, Vec3 s, double rad, double h, double ms)
 {
-    LoadObject(filename);
     Init(pos, ro, s, rad, h, ms);
-    _weapon = new Weapon();
     _weapon->ammo = 100;
-    _childObjects.push_back(_weapon);
 }
 
 Player::~Player()

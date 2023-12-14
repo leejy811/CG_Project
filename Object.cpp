@@ -65,8 +65,8 @@ void Object::ThisRender()
 	SetTransform();
 	for (auto f : _faces)
 	{
-		glBegin(GL_POLYGON);
 		glNormal3f(f->_normal.x(), f->_normal.y(), f->_normal.z());
+		glBegin(GL_POLYGON);
 		for (int j = 0; j < 3; j++)
 		{
 			glVertex3f(f->_vertices[j].x(), f->_vertices[j].y(), f->_vertices[j].z());

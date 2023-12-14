@@ -62,7 +62,7 @@ private:
 
 	//Enemy
 	int _curEnemyCount = 0;
-	int _enemyPoolSize = 10;
+	int _enemyPoolSize = 0;
 	int _enemySpawnCool = 200;
 	int _curEnemySpawnTime;
 

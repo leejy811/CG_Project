@@ -1,4 +1,4 @@
-#include <gl/glut.h>
+﻿#include <gl/glut.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -7,14 +7,6 @@
 #include "bmpfuncs.h"
 
 GameManager* GM = GameManager::GetInstance();
-float zoom = 15.0f;
-float rotx = 0;
-float roty = 0.001f;
-float tx = 0;
-float ty = 0;
-int lastx = 0;
-int lasty = 0;
-unsigned char Buttons[3] = { 0 };
 
 double prevTime;
 double frameTime = 20;
@@ -157,26 +149,6 @@ void Motion(int x, int y)
 	int mouseX = x - WIDTH / 2;
 	int mouseY = (HEIGHT - y) - HEIGHT / 2;
 	GM->HandleMouseInput(mouseX, mouseY, MOUSE_MOTION, -1);
-
-	int diffx = x - lastx;
-	int diffy = y - lasty;
-	lastx = x;
-	lasty = y;
-
-	if (Buttons[2])
-	{
-		zoom -= (float)0.05f * diffx;
-	}
-	else if (Buttons[0])
-	{
-		rotx += (float)0.5f * diffy;
-		roty += (float)0.5f * diffx;
-	}
-	else if (Buttons[1])
-	{
-		tx += (float)0.05f * diffx;
-		ty -= (float)0.05f * diffy;
-	}
 	glutPostRedisplay();
 }
 
@@ -186,23 +158,6 @@ void Mouse(int button, int state, int x, int y)
 	int mouseY = (HEIGHT - y) - HEIGHT / 2;
 	if (button == GLUT_LEFT_BUTTON)
 		GM->HandleMouseInput(mouseX, mouseY, MOUSE_CLICK, state);
-
-	lastx = x;
-	lasty = y;
-	switch (button)
-	{
-	case GLUT_LEFT_BUTTON:
-		Buttons[0] = ((GLUT_DOWN == state) ? 1 : 0);
-		break;
-	case GLUT_MIDDLE_BUTTON:
-		Buttons[1] = ((GLUT_DOWN == state) ? 1 : 0);
-		break;
-	case GLUT_RIGHT_BUTTON:
-		Buttons[2] = ((GLUT_DOWN == state) ? 1 : 0);
-		break;
-	default:
-		break;
-	}
 	glutPostRedisplay();
 }
 
@@ -219,7 +174,7 @@ int main(int argc, char** argv)
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
 	glutInitWindowSize(WIDTH, HEIGHT);
-	glutInitWindowPosition(0, 0);
+	glutInitWindowPosition(300, 300);
 	glutCreateWindow("My First GL Program");
  
 	//glutGameModeString("1280x720:32");

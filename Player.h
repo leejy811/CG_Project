@@ -16,8 +16,7 @@ class Player : public Character
 {
 public:
 	Player();
-	Player(const char* filename);
-	Player(const char* filename, Vec3 pos, Vec3 ro, Vec3 s, double rad, double h, double ms);
+	Player(Vec3 pos, Vec3 ro, Vec3 s, double rad, double h, double ms);
 	~Player();
 
 	void Init(Vec3 pos, Vec3 ro, Vec3 s, double rad, double h, double ms);
@@ -29,7 +28,6 @@ public:
 	void HandleSpecialInput(int  key, int state);
 	void HandleMouseInput(int x, int y, int state, int clickState);
 private:
-
 };
 
 #endif

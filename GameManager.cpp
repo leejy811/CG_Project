@@ -24,13 +24,13 @@ void GameManager::Init()
 {
 	srand(time(NULL));
 
-	_player = new Player("OBJ/Soldier.obj", Vec3(0, 0, 0), Vec3(0, 0, 0), Vec3(0.5, 0.5, 0.5), 20, 10, 3);
-	_mainCamera = new Camera(Vec3(0, 500, 100), *_player);
+	_player = new Player(Vec3(0, 0, 0), Vec3(0, 0, 0), Vec3(0.5, 0.5, 0.5), 20, 10, 3);
+	_mainCamera = new Camera(Vec3(0, 1.5, 1.5), *_player);
 	_uiManager = new UIManager();
 
 	for (int i = 0; i < _enemyPoolSize; i++)
 	{
-		_enemies.push_back(new Enemy("OBJ/Soldier.obj", Vec3(0, 0, 0), Vec3(0, 0, 0), Vec3(0.5, 0.5, 0.5), *_player, 20, 1, 1));
+		_enemies.push_back(new Enemy(Vec3(0, 0, 0), Vec3(0, 0, 0), Vec3(0.5, 0.5, 0.5), *_player, 20, 1, 1));
 	}
 
 	_mapTiles.push_back(new MapTile(500, *_player, Vec3(1, 0, 1)));

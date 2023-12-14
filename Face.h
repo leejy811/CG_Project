@@ -3,6 +3,7 @@
 
 #pragma once
 #include "Vec3.h"
+#include <vector>
 
 using namespace std;
 

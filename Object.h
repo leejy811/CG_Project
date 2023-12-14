@@ -5,7 +5,6 @@
 
 #include <vector>
 #include "Vec3.h"
-#include "Vertex.h"
 #include "Face.h"
 
 using namespace std;
