@@ -20,6 +20,8 @@ public:
 	void Render();
 	void MinimapRender(float red, float green, float blue, float size);
 	void OnCollision(CollisonLayer layer, bool isEnter);
+	void OnDamage();
+	void OnDie();
 private:
 	void UpdateMove();
 	void AutoShoot(double dt);

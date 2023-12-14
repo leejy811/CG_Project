@@ -25,7 +25,7 @@ void UIManager::Render()
 	glLoadIdentity();
 
 	DrawMouse(20);
-	DrawStringInfo();
+	DrawInfo();
 	DrawHealthBar(WIDTH / 20, HEIGHT / 60);
 
 	glPopMatrix();
@@ -71,18 +71,25 @@ void UIManager::DrawMouse(int mouseSize)
 	glPopMatrix();
 }
 
-void UIManager::DrawStringInfo()
+void UIManager::DrawString(const char* str, int value, float x, float y)
+{
+	glRasterPos3f(x, y, 0);
+	char buf[50];
+	sprintf(buf, str, value);
+	for (unsigned int i = 0; i < strlen(buf); i++)
+	{
+		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, buf[i]);
+	}
+}
+
+void UIManager::DrawInfo()
 {
 	glPushMatrix();
 
 	glColor3f(1, 1, 1);
-	glRasterPos3f(WIDTH / 3, HEIGHT * -0.4, 0);
-	char str[50];
-	sprintf(str, "Ammo : %d", GameManager::GetInstance()->GetPlayer()->_weapon->ammo);
-	for (unsigned int i = 0; i < strlen(str); i++)
-	{
-		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, str[i]);
-	}
+	DrawString("Ammo : %d", GameManager::GetInstance()->GetPlayer()->_weapon->ammo, WIDTH / 3, HEIGHT * -0.4);
+	DrawString("Stage : %d", GameManager::GetInstance()->GetCurStage(), -WIDTH / 2 + WIDTH / 20, HEIGHT / 2 - HEIGHT / 20);
+	DrawString("Enemy : %d", GameManager::GetInstance()->GetCurEnemyCount(), -WIDTH / 2 + WIDTH / 20, HEIGHT / 2 - HEIGHT / 10);
 
 	glPopMatrix();
 }

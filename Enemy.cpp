@@ -1,4 +1,5 @@
 #include "Enemy.h"
+#include "GameManager.h"
 #include <GL/freeglut.h>
 
 Enemy::Enemy()
@@ -67,6 +68,17 @@ void Enemy::OnCollision(CollisonLayer layer, bool isEnter)
 		_moveDirection = Vec3(0, 0, 0);
 		_isMove = !isEnter;
 	}
+}
+
+void Enemy::OnDamage()
+{
+	Character::OnDamage();
+}
+
+void Enemy::OnDie()
+{
+	Character::OnDie();
+	GameManager::GetInstance()->SetCurEnemyCount();
 }
 
 void Enemy::UpdateMove()

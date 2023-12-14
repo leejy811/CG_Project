@@ -19,7 +19,8 @@ public:
 	void SetMousePositon(int x, int y);
 private:
 	void DrawMouse(int mouseSize);
-	void DrawStringInfo();
+	void DrawString(const char* str, int value, float x, float y);
+	void DrawInfo();
 	void DrawHealthBar(int width, int height);
 private:
 	Vec3 _mousePos;

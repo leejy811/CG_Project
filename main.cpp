@@ -16,7 +16,6 @@ int lastx = 0;
 int lasty = 0;
 unsigned char Buttons[3] = { 0 };
 
-double curTime;
 double prevTime;
 double frameTime = 20;
 double slowDeltaTime = 1;
@@ -64,7 +63,7 @@ void idle(void)
 {
 	ShowCursor(false);
 
-	curTime = glutGet(GLUT_ELAPSED_TIME);
+	double curTime = glutGet(GLUT_ELAPSED_TIME);
 	if (curTime - prevTime > frameTime)
 	{
 		int dt = isMove ? fastDeltaTime : slowDeltaTime;
@@ -220,7 +219,7 @@ int main(int argc, char** argv)
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
 	glutInitWindowSize(WIDTH, HEIGHT);
-	glutInitWindowPosition(300, 300);
+	glutInitWindowPosition(0, 0);
 	glutCreateWindow("My First GL Program");
  
 	//glutGameModeString("1280x720:32");

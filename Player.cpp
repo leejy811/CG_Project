@@ -23,7 +23,7 @@ Player::Player(const char* filename, Vec3 pos, Vec3 ro, Vec3 s, double rad, doub
     LoadObject(filename);
     Init(pos, ro, s, rad, h, ms);
     _weapon = new Weapon();
-    _weapon->ammo = 30;
+    _weapon->ammo = 100;
     _childObjects.push_back(_weapon);
 }
 
@@ -51,6 +51,26 @@ void Player::Render()
 void Player::MinimapRender(float red, float green, float blue, float size)
 {
     Character::MinimapRender(red, green, blue, size);
+
+    glPushMatrix();
+
+    SetTransform();
+
+    GLfloat emission[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+    glMaterialfv(GL_FRONT, GL_EMISSION, emission);
+
+    glColor3f(1, 1, 1);
+    glBegin(GL_QUADS);
+    glVertex3f(-1000.0f, 0.0f, -1000.0f);
+    glVertex3f(-1000.0f, 0.0f, 1000.0f);
+    glVertex3f(1000.0f, 0.0f, 1000.0f);
+    glVertex3f(1000.0f, 0.0f, -1000.0f);
+    glEnd();
+
+    GLfloat clearEmission[] = { 0.0f, 0.0f, 0.0f, 1.0f };
+    glMaterialfv(GL_FRONT, GL_EMISSION, clearEmission);
+
+    glPopMatrix();
 }
 
 void Player::OnCollision(CollisonLayer layer, bool isEnter)

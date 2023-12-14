@@ -37,10 +37,13 @@ void GameManager::Init()
 	_mapTiles.push_back(new MapTile(500, *_player, Vec3(1, 0, -1)));
 	_mapTiles.push_back(new MapTile(500, *_player, Vec3(-1, 0, 1)));
 	_mapTiles.push_back(new MapTile(500, *_player, Vec3(-1, 0, -1)));
+
+	InitStage();
 }
 
 void GameManager::Update(double dt)
 {
+	CheckStage();
 	SpawnEnemy(dt);
 	DetectCollison();
 	_player->Update(dt);
@@ -94,20 +97,43 @@ void GameManager::HandleMouseInput(int x, int y, int state, int clickState)
 	_player->HandleMouseInput(x, y, state, clickState);
 }
 
+Player* GameManager::GetPlayer()
+{
+	return _player;
+}
+
+int GameManager::GetCurStage()
+{
+	return _curStage;
+}
+
+int GameManager::GetCurEnemyCount()
+{
+	return _curEnemyCount;
+}
+
+void GameManager::SetCurEnemyCount()
+{
+	_curEnemyCount--;
+}
+
 void GameManager::SpawnEnemy(double dt)
 {
 	int time = glutGet(GLUT_ELAPSED_TIME);
 
 	if (time - _curEnemySpawnTime > _enemySpawnCool * (1.0 / dt))
 	{
-		if (_curEnemyIndex == _enemyPoolSize) return;
-		_curEnemySpawnTime = time;
-		_enemies[_curEnemyIndex]->isActive = true;
-
-		double angle = (double)(rand() % 360) * (3.14152 / 180);
-		_enemies[_curEnemyIndex]->position = Vec3(100 * cos(angle), 0, 100 * sin(angle));
-
-		_curEnemyIndex++;
+		for (auto e : _enemies)
+		{
+			if (!e->isActive)
+			{
+				_curEnemySpawnTime = time;
+				e->isActive = true;
+				double angle = (double)(rand() % 360) * (3.14152 / 180);
+				e->position = Vec3(100 * cos(angle), 0, 100 * sin(angle));
+				break;
+			}
+		}
 	}
 }
 
@@ -161,7 +187,7 @@ void GameManager::DetectCollison()
 
 void GameManager::DrawMinimap()
 {
-	glViewport(WIDTH * (55.0 / 64.0), HEIGHT * (3.0 / 4.0), WIDTH * (9.0 / 64.0), HEIGHT / 5);
+	glViewport(WIDTH * (55.0 / 64.0), HEIGHT * (3.0 / 4.0), WIDTH * (9.0 / 64.0), HEIGHT / 4);
 
 	glLoadIdentity();
 	_mainCamera->SetViewMatrix();
@@ -177,7 +203,20 @@ void GameManager::DrawMinimap()
 	glFlush();
 }
 
-Player* GameManager::GetPlayer()
+void GameManager::InitStage()
 {
-	return _player;
+	_curStage = 1;
+	_curEnemyCount = 10;
+}
+
+void GameManager::CheckStage()
+{
+	if (_curEnemyCount <= 0)
+		UpdateStage();
+}
+
+void GameManager::UpdateStage()
+{
+	_curStage++;
+	_curEnemyCount = 10 + _curStage * 2;
 }

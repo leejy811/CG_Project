@@ -59,8 +59,25 @@ void Character::MinimapRender(float red, float green, float blue, float size)
 
 	SetTransform();
 
-	glColor3f(red, green, blue);
-	glutSolidSphere(size, 10, 10);
+	GLfloat emission[] = { red, green, blue, 1.0f };
+	glMaterialfv(GL_FRONT, GL_EMISSION, emission);
+
+	glColor3f(1, 1, 1);
+	glTranslatef(0, size, 0);
+
+	double rad = size;
+	glBegin(GL_POLYGON);
+	for (int i = 0; i < 360; i++) 
+	{ 
+		double angle = i * 3.141592 / 180;
+		double x = rad * cos(angle);
+		double y = rad * sin(angle);
+		glVertex3f(x, 0, y); 
+	}
+	glEnd();
+
+	GLfloat clearEmission[] = { 0.0f, 0.0f, 0.0f, 1.0f };
+	glMaterialfv(GL_FRONT, GL_EMISSION, clearEmission);
 
 	glPopMatrix();
 }
@@ -82,6 +99,11 @@ void Character::OnDamage()
 
 	if (_curHealth <= 0)
 	{
-		isActive = false;
+		OnDie();
 	}
+}
+
+void Character::OnDie()
+{
+	isActive = false;
 }

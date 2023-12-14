@@ -37,6 +37,9 @@ public:
 	void HandleMouseInput(int x, int y, int state, int clickState);
 
 	Player* GetPlayer();
+	int GetCurStage();
+	int GetCurEnemyCount();
+	void SetCurEnemyCount();
 private:
 	GameManager();
 	GameManager(const GameManager& other);
@@ -45,6 +48,9 @@ private:
 	void SpawnEnemy(double dt);
 	void DetectCollison();
 	void DrawMinimap();
+	void InitStage();
+	void CheckStage();
+	void UpdateStage();
 private:
 	static GameManager* _instance;
 
@@ -55,10 +61,13 @@ private:
 	vector<MapTile*> _mapTiles;
 
 	//Enemy
-	int _curEnemyIndex = 0;
-	int _enemyPoolSize = 1;
-	int _enemySpawnCool = 15000;
+	int _curEnemyCount = 0;
+	int _enemyPoolSize = 10;
+	int _enemySpawnCool = 200;
 	int _curEnemySpawnTime;
+
+	//Stage
+	int _curStage = 1;
 };
 
 #endif
