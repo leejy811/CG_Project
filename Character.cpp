@@ -33,7 +33,8 @@ Character::~Character()
 void Character::Init(Vec3 pos, Vec3 ro, Vec3 s, double rad, double h, double ms) {
 	Object::Init(pos, ro, s, rad);
 	_moveSpeed = ms;
-	_health = h;
+	_curHealth = h;
+	_maxHealth = h;
 }
 
 void Character::Update(double dt)
@@ -77,9 +78,9 @@ void Character::Move(double dt)
 
 void Character::OnDamage()
 {
-	_health -= 1;
+	_curHealth -= 1;
 
-	if (_health <= 0)
+	if (_curHealth <= 0)
 	{
 		isActive = false;
 	}

@@ -24,7 +24,7 @@ void GameManager::Init()
 {
 	srand(time(NULL));
 
-	_player = new Player("OBJ/Soldier.obj", Vec3(0, 0, 0), Vec3(0, 0, 0), Vec3(0.5, 0.5, 0.5), 20, 1000, 3);
+	_player = new Player("OBJ/Soldier.obj", Vec3(0, 0, 0), Vec3(0, 0, 0), Vec3(0.5, 0.5, 0.5), 20, 10, 3);
 	_mainCamera = new Camera(Vec3(0, 500, 100), *_player);
 	_uiManager = new UIManager();
 
@@ -175,4 +175,9 @@ void GameManager::DrawMinimap()
 	}
 
 	glFlush();
+}
+
+Player* GameManager::GetPlayer()
+{
+	return _player;
 }

@@ -21,15 +21,16 @@ public:
 	virtual void Render();
 	virtual void MinimapRender(float red, float green, float blue, float size);
 	virtual void OnCollision(CollisonLayer layer, bool isEnter);
-
+public:
 	Weapon* _weapon;
+	double _curHealth;
+	double _maxHealth;
 protected:
 	void Move(double dt);
 	void OnDamage();
 protected:
 	Vec3 _moveDirection;
 	double _moveSpeed;
-	double _health;
 };
 
 #endif

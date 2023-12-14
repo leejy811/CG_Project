@@ -223,7 +223,7 @@ int main(int argc, char** argv)
 	glutInitWindowPosition(300, 300);
 	glutCreateWindow("My First GL Program");
  
-	//glutGameModeString("800x600:32");
+	//glutGameModeString("1280x720:32");
 
 	//if (glutGameModeGet(GLUT_GAME_MODE_POSSIBLE))
 	//	glutEnterGameMode();

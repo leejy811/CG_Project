@@ -25,13 +25,14 @@ void UIManager::Render()
 	glLoadIdentity();
 
 	DrawMouse(20);
+	DrawStringInfo();
+	DrawHealthBar(WIDTH / 20, HEIGHT / 60);
 
 	glPopMatrix();
 	glMatrixMode(GL_PROJECTION);
 	glPopMatrix();
 	glMatrixMode(GL_MODELVIEW);
 	glPopAttrib();
-	glFlush();
 }
 
 void UIManager::SetMousePositon(int x, int y)
@@ -41,6 +42,7 @@ void UIManager::SetMousePositon(int x, int y)
 
 void UIManager::DrawMouse(int mouseSize)
 {
+	glPushMatrix();
 	glColor3f(1, 1, 1);
 	glTranslatef(_mousePos.x(), _mousePos.y(), 0);
 
@@ -66,4 +68,46 @@ void UIManager::DrawMouse(int mouseSize)
 		glVertex2f((mouseSize + mouseSize / 3) * cos(90 * i * (3.14152 / 180)), (mouseSize + mouseSize / 3) * sin(90 * i * (3.14152 / 180)));
 		glEnd();
 	}
+	glPopMatrix();
+}
+
+void UIManager::DrawStringInfo()
+{
+	glPushMatrix();
+
+	glColor3f(1, 1, 1);
+	glRasterPos3f(WIDTH / 3, HEIGHT * -0.4, 0);
+	char str[50];
+	sprintf(str, "Ammo : %d", GameManager::GetInstance()->GetPlayer()->_weapon->ammo);
+	for (unsigned int i = 0; i < strlen(str); i++)
+	{
+		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, str[i]);
+	}
+
+	glPopMatrix();
+}
+
+void UIManager::DrawHealthBar(int width, int height)
+{
+	glPushMatrix();
+	glTranslatef(-width / 2, HEIGHT / 8, 0);
+
+	double healthRatio = GameManager::GetInstance()->GetPlayer()->_curHealth / GameManager::GetInstance()->GetPlayer()->_maxHealth;
+	glColor3f(1, 0, 0);
+	glBegin(GL_QUADS);
+	glVertex2f(0, -height);
+	glVertex2f(0, 0);
+	glVertex2f(width * healthRatio, 0);
+	glVertex2f(width * healthRatio, -height);
+	glEnd();
+
+	glColor3f(1, 1, 1);
+	glBegin(GL_QUADS);
+	glVertex2f(0, -height);
+	glVertex2f(0, 0);
+	glVertex2f(width, 0);
+	glVertex2f(width, -height);
+	glEnd();
+
+	glPopMatrix();
 }

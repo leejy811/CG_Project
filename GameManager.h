@@ -11,8 +11,8 @@
 #include "MapTile.h"
 #include <vector>
 
-#define WIDTH 1600
-#define HEIGHT 900
+#define WIDTH 1280
+#define HEIGHT 720
 #define DELTA_TIME 0.2
 
 using namespace std;
@@ -35,6 +35,8 @@ public:
 	void HandleKeyInput(unsigned char key, int state);
 	void HandleSpecialInput(int  key, int state);
 	void HandleMouseInput(int x, int y, int state, int clickState);
+
+	Player* GetPlayer();
 private:
 	GameManager();
 	GameManager(const GameManager& other);
@@ -54,7 +56,7 @@ private:
 
 	//Enemy
 	int _curEnemyIndex = 0;
-	int _enemyPoolSize = 10;
+	int _enemyPoolSize = 1;
 	int _enemySpawnCool = 15000;
 	int _curEnemySpawnTime;
 };
