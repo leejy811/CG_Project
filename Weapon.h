@@ -12,8 +12,7 @@ class Weapon : public Object
 {
 public:
 	Weapon();
-	Weapon(const char* filename);
-	Weapon(const char* filename, Vec3 pos, Vec3 ro, Vec3 s);
+	Weapon(Vec3 pos, Vec3 ro, Vec3 s, Vec3 off);
 	~Weapon();
 
 	void Update(double dt);

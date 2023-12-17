@@ -15,9 +15,8 @@ AnimationState::AnimationState(State s, double speed, bool isLoop)
 	switch (s)
 	{
 	case IDLE:
-		frames.push_back(new Frame(ROBOT, 1));
-		frames.push_back(new Frame(ROBOT1, 1));
-		frames.push_back(new Frame(ROBOT2, 1));
+		frames.push_back(new Frame(PLAYER_IDLE1, 1));
+		frames.push_back(new Frame(PLAYER_IDLE2, 1));
 		break;
 	case MOVE:
 		frames.push_back(new Frame(ROBOT, 1));

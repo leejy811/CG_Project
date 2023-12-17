@@ -12,7 +12,7 @@ class Camera
 {
 public:
 	Camera();
-	Camera(Vec3 os, Object& tar);
+	Camera(Vec3 off, Object& tar);
 	~Camera();
 	void Update();
 	void Render();
@@ -21,6 +21,7 @@ public:
 	void SetTarget(Object& tar);
 
 	Vec3 offset;
+	Vec3 minimapOffset;
 private:
 	Vec3 _position;
 	Vec3 _up;

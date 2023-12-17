@@ -24,19 +24,19 @@ void GameManager::Init()
 {
 	srand(time(NULL));
 
-	_player = new Player(Vec3(0, 0, 0), Vec3(0, 0, 0), Vec3(0.5, 0.5, 0.5), 20, 10, 3);
-	_mainCamera = new Camera(Vec3(0, 1.5, 1.5), *_player);
+	_player = new Player("img/PlayerTexture.bmp", Vec3(0, 0, 0), Vec3(0, 0, 0), Vec3(1, 1, 1), 2, 10, 3);
+	_mainCamera = new Camera(Vec3(0, 10, 2), *_player);
 	_uiManager = new UIManager();
 
 	for (int i = 0; i < _enemyPoolSize; i++)
 	{
-		_enemies.push_back(new Enemy(Vec3(0, 0, 0), Vec3(0, 0, 0), Vec3(0.5, 0.5, 0.5), *_player, 20, 1, 1));
+		_enemies.push_back(new Enemy("img/EnemyTexture.bmp", Vec3(0, 0, 0), Vec3(0, 0, 0), Vec3(1, 1, 1), *_player, 2, 1, 1));
 	}
 
-	_mapTiles.push_back(new MapTile(500, *_player, Vec3(1, 0, 1)));
-	_mapTiles.push_back(new MapTile(500, *_player, Vec3(1, 0, -1)));
-	_mapTiles.push_back(new MapTile(500, *_player, Vec3(-1, 0, 1)));
-	_mapTiles.push_back(new MapTile(500, *_player, Vec3(-1, 0, -1)));
+	_mapTiles.push_back(new MapTile(50, *_player, Vec3(1, 0, 1)));
+	_mapTiles.push_back(new MapTile(50, *_player, Vec3(1, 0, -1)));
+	_mapTiles.push_back(new MapTile(50, *_player, Vec3(-1, 0, 1)));
+	_mapTiles.push_back(new MapTile(50, *_player, Vec3(-1, 0, -1)));
 
 	InitStage();
 }
@@ -121,7 +121,7 @@ void GameManager::SpawnEnemy(double dt)
 {
 	int time = glutGet(GLUT_ELAPSED_TIME);
 
-	if (time - _curEnemySpawnTime > _enemySpawnCool * (1.0 / dt))
+	if (time - _curEnemySpawnTime > _enemySpawnCool * (1.0 / dt) * DELTA_TIME)
 	{
 		for (auto e : _enemies)
 		{
@@ -130,7 +130,7 @@ void GameManager::SpawnEnemy(double dt)
 				_curEnemySpawnTime = time;
 				e->isActive = true;
 				double angle = (double)(rand() % 360) * (3.14152 / 180);
-				e->position = Vec3(100 * cos(angle), 0, 100 * sin(angle));
+				e->position = Vec3(10 * cos(angle), 0, 10 * sin(angle));
 				break;
 			}
 		}
@@ -192,12 +192,12 @@ void GameManager::DrawMinimap()
 	glLoadIdentity();
 	_mainCamera->SetViewMatrix();
 
-	_player->MinimapRender(0, 1, 0, 30);
+	_player->MinimapRender(1, 0, 0, 0.3);
 
 	for (auto e : _enemies)
 	{
 		if (!e->isActive) continue;
-		e->MinimapRender(1, 0, 0, 20);
+		e->MinimapRender(0, 1, 0, 0.2);
 	}
 
 	glFlush();

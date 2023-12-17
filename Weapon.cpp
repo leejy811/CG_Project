@@ -8,21 +8,12 @@ Weapon::Weapon()
 	_bulletOffset = Vec3(0, 0, 0);
 }
 
-Weapon::Weapon(const char* filename)
+Weapon::Weapon(Vec3 pos, Vec3 ro, Vec3 s, Vec3 off)
 {
-	LoadObject(filename);
-	position = Vec3(0, 0, 0);
-	rotation = Vec3(0, 0, 0);
-	scale = Vec3(1, 1, 1);
-	_bulletOffset = Vec3(0, 0, 0);
-}
-
-Weapon::Weapon(const char* filename, Vec3 pos, Vec3 ro, Vec3 s)
-{
-	LoadObject(filename);
 	position = pos;
 	rotation = ro;
 	scale = s;
+	_bulletOffset = off;
 }
 
 Weapon::~Weapon()
@@ -52,10 +43,10 @@ void Weapon::Shoot(Vec3 playerPos, Vec3 aim, bool isAuto)
 	aim.normalize();
 	for (auto b : _bullets) {
 		if (b->isActive == false) {
-			b->Init(playerPos + position + _bulletOffset, Vec3(0, 0, 0), Vec3(1, 1, 1), aim, 5);
+			b->Init(playerPos + position + aim * _bulletOffset.x(), Vec3(0, 0, 0), Vec3(0.1, 0.1, 0.1), aim, 0.1);
 			b->isActive = true;
 			return;
 		}
 	}
-	_bullets.push_back(new Bullet(playerPos + position + _bulletOffset, Vec3(0, 0, 0), Vec3(1, 1, 1), aim, 5));
+	_bullets.push_back(new Bullet(playerPos + position + aim * _bulletOffset.x(), Vec3(0, 0, 0), Vec3(0.1, 0.1, 0.1), aim, 0.1));
 }

@@ -11,10 +11,10 @@ class Enemy : public Character
 {
 public:
 	Enemy();
-	Enemy(Vec3 pos, Vec3 ro, Vec3 s, Character& tar, double rad, double h, double ms);
+	Enemy(const char* filename, Vec3 pos, Vec3 ro, Vec3 s, Character& tar, double rad, double h, double ms);
 	~Enemy();
 
-	void Init(Vec3 pos, Vec3 ro, Vec3 s, Character& tar, double rad, double h, double ms);
+	void Init(const char* filename, Vec3 pos, Vec3 ro, Vec3 s, Character& tar, double rad, double h, double ms);
 	void Update(double dt);
 	void Render();
 	void MinimapRender(float red, float green, float blue, float size);

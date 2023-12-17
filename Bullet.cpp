@@ -37,7 +37,7 @@ void Bullet::Render()
 	glPushMatrix();
 
 	SetTransform();
-	glutSolidSphere(5, 10, 10);
+	glutSolidSphere(1, 10, 10);
 
 	glPopMatrix();
 }

@@ -13,10 +13,10 @@ class Character : public Object
 {
 public:
 	Character();
-	Character(Vec3 pos, Vec3 ro, Vec3 s, double rad, double h, double ms);
+	Character(const char* filename, Vec3 pos, Vec3 ro, Vec3 s, double rad, double h, double ms);
 	~Character();
 
-	virtual void Init(Vec3 pos, Vec3 ro, Vec3 s, double rad, double h, double ms);
+	virtual void Init(const char* filename, Vec3 pos, Vec3 ro, Vec3 s, double rad, double h, double ms);
 	virtual void Update(double dt);
 	virtual void Render();
 	virtual void MinimapRender(float red, float green, float blue, float size);
@@ -25,6 +25,7 @@ public:
 	virtual void OnDie();
 	virtual void PlayAnimation(double dt);
 	virtual void InitAnimation();
+	virtual void InitTexture(const char* filename);
 public:
 	Weapon* _weapon;
 	double _curHealth;

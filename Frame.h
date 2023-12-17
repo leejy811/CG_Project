@@ -11,7 +11,8 @@ using namespace std;
 #define ROBOT "OBJ/Robot.obj"
 #define ROBOT1 "OBJ/Robot1.obj"
 #define ROBOT2 "OBJ/Robot2.obj"
-#define PLAYER_IDLE "OBJ/Player_Idle.obj"
+#define PLAYER_IDLE1 "OBJ/Player_Idle1.obj"
+#define PLAYER_IDLE2 "OBJ/Player_Idle2.obj"
 #define PLAYER_MOVE "OBJ/Player_Move.obj"
 #define PLAYER_DIE "OBJ/Player_Die.obj"
 

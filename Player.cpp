@@ -12,9 +12,9 @@ Player::Player()
     _childObjects.push_back(_weapon);
 }
 
-Player::Player(Vec3 pos, Vec3 ro, Vec3 s, double rad, double h, double ms)
+Player::Player(const char* filename, Vec3 pos, Vec3 ro, Vec3 s, double rad, double h, double ms)
 {
-    Init(pos, ro, s, rad, h, ms);
+    Init(filename, pos, ro, s, rad, h, ms);
     _weapon->ammo = 100;
 }
 
@@ -23,8 +23,8 @@ Player::~Player()
 	
 }
 
-void Player::Init(Vec3 pos, Vec3 ro, Vec3 s, double rad, double h, double ms) {
-    Character::Init(pos, ro, s, rad, h, ms);
+void Player::Init(const char* filename, Vec3 pos, Vec3 ro, Vec3 s, double rad, double h, double ms) {
+    Character::Init(filename, pos, ro, s, rad, h, ms);
 }
 
 void Player::Update(double dt)
@@ -46,6 +46,8 @@ void Player::MinimapRender(float red, float green, float blue, float size)
     glPushMatrix();
 
     SetTransform();
+
+    glTranslatef(0, 1.6, 0);
 
     GLfloat emission[] = { 1.0f, 1.0f, 1.0f, 1.0f };
     glMaterialfv(GL_FRONT, GL_EMISSION, emission);

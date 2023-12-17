@@ -6,8 +6,8 @@ Camera::Camera()
 	_up.set(0, 1, 0);
 }
 
-Camera::Camera(Vec3 os, Object& tar)
-	: offset(os), _target(&tar)
+Camera::Camera(Vec3 off, Object& tar)
+	: offset(off), _target(&tar)
 {
 	_up.set(0, 1, 0);
 }

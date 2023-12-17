@@ -1,5 +1,6 @@
 #include "Character.h"
 #include "GL/freeglut.h"
+#include "bmpfuncs.h"
 
 Character::Character()
 {
@@ -7,12 +8,12 @@ Character::Character()
 	rotation = Vec3(0, 0, 0);
 	scale = Vec3(1, 1, 1);
 
-	_weapon = new Weapon();
+	_weapon = new Weapon(Vec3(0, 5, -1), Vec3(0, 0, 0), Vec3(0, 0, 0), Vec3(6, 0, 0));
 }
 
-Character::Character(Vec3 pos, Vec3 ro, Vec3 s, double rad, double h, double ms)
+Character::Character(const char* filename, Vec3 pos, Vec3 ro, Vec3 s, double rad, double h, double ms)
 {
-	Init(pos, ro, s, rad, h, ms);
+	Init(filename, pos, ro, s, rad, h, ms);
 }
 
 Character::~Character()
@@ -20,17 +21,19 @@ Character::~Character()
 
 }
 
-void Character::Init(Vec3 pos, Vec3 ro, Vec3 s, double rad, double h, double ms) {
+void Character::Init(const char* filename, Vec3 pos, Vec3 ro, Vec3 s, double rad, double h, double ms) {
 	Object::Init(pos, ro, s, rad);
 	_moveSpeed = ms;
 	_curHealth = h;
 	_maxHealth = h;
 
-	_weapon = new Weapon();
+	_weapon = new Weapon(Vec3(0, 1, -0.2), ro, Vec3(0, 0, 0), Vec3(1.3, 0, 0));
 	_childObjects.push_back(_weapon);
 
 	_animator = new Animator(IDLE);
 	InitAnimation();
+
+	InitTexture(filename);
 }
 
 void Character::Update(double dt)
@@ -60,7 +63,7 @@ void Character::MinimapRender(float red, float green, float blue, float size)
 	glMaterialfv(GL_FRONT, GL_EMISSION, emission);
 
 	glColor3f(1, 1, 1);
-	glTranslatef(0, size, 0);
+	glTranslatef(0, 1.6 + size, 0);
 
 	double rad = size;
 	glBegin(GL_POLYGON);
@@ -112,7 +115,7 @@ void Character::PlayAnimation(double dt)
 	if (curAnim->frames.size() == curAnim->_curFrame && !curAnim->_isLoop) return;
 
 	int idx = curAnim->_curFrame % curAnim->frames.size();
-	_animator->_lerpAlpha += 0.01 * curAnim->_speed * dt * curAnim->frames[idx]->_duration;
+	_animator->_lerpAlpha += dt * curAnim->_speed * curAnim->frames[idx]->_duration;
 	double alpha = sin(_animator->_lerpAlpha) * 0.5 + 0.5;
 
 	for (int i = 0; i <_faces.size(); i++)
@@ -141,4 +144,22 @@ void Character::InitAnimation()
 		_faces.push_back(new Face(index++, f->_vertices[0], f->_vertices[1], f->_vertices[2], f->_uvs[0], f->_uvs[1], f->_uvs[2], f->_vertNormals[0], f->_vertNormals[1], f->_vertNormals[2]));
 	}
 	ComputeNormal();
+}
+
+void Character::InitTexture(const char* filename)
+{
+	useTexture = true;
+	_texName = new GLuint();
+	int imgWidth, imgHeight, channels;
+	glGenTextures(1, _texName);
+	glBindTexture(GL_TEXTURE_2D, *_texName);
+
+	uchar* img = readImageData(filename, &imgWidth, &imgHeight, &channels);
+	glTexImage2D(GL_TEXTURE_2D, 0, 3, imgWidth, imgHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, img);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+
+	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 }

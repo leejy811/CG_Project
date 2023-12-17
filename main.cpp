@@ -9,9 +9,8 @@
 GameManager* GM = GameManager::GetInstance();
 
 double prevTime;
-double frameTime = 20;
-double slowDeltaTime = 1;
-double fastDeltaTime = 5;
+double slowDeltaTime = DELTA_TIME;
+double fastDeltaTime = DELTA_TIME * 5;
 
 bool isMove = false;
 
@@ -56,9 +55,9 @@ void idle(void)
 	ShowCursor(false);
 
 	double curTime = glutGet(GLUT_ELAPSED_TIME);
-	if (curTime - prevTime > frameTime)
+	if (curTime - prevTime > DELTA_TIME * 1000)
 	{
-		int dt = isMove ? fastDeltaTime : slowDeltaTime;
+		double dt = isMove ? fastDeltaTime : slowDeltaTime;
 		prevTime = curTime;
 
 		GM->Update(dt);
@@ -71,7 +70,7 @@ void resize(int width, int height)
 	glViewport(0, 0, width, height);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(45, (float)width / (float)height, 1, 2000);
+	gluPerspective(45, (float)width / (float)height, 1, 500);
 	glMatrixMode(GL_MODELVIEW);
 }
 

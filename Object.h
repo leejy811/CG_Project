@@ -6,6 +6,7 @@
 #include <vector>
 #include "Vec3.h"
 #include "Face.h"
+#include "gl\glut.h"
 
 using namespace std;
 
@@ -33,6 +34,7 @@ public:
 	Vec3 scale;
 	double collisionRad;
 	bool isActive = true;
+	bool useTexture = false;
 protected:
 	void LoadObject(const char* filename);
 	void ComputeNormal();
@@ -41,6 +43,7 @@ protected:
 protected:
 	vector<Face*> _faces;
 	vector<Object*> _childObjects;
+	GLuint* _texName;
 };
 
 #endif

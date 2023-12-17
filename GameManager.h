@@ -13,7 +13,7 @@
 
 #define WIDTH 1280
 #define HEIGHT 720
-#define DELTA_TIME 0.2
+#define DELTA_TIME 0.02
 
 using namespace std;
 
@@ -62,7 +62,7 @@ private:
 
 	//Enemy
 	int _curEnemyCount = 0;
-	int _enemyPoolSize = 0;
+	int _enemyPoolSize = 3;
 	int _enemySpawnCool = 200;
 	int _curEnemySpawnTime;
 
