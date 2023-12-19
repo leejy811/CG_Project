@@ -1,5 +1,6 @@
 #include "MapTile.h"
 #include "GL/freeglut.h"
+#include "bmpfuncs.h"
 
 MapTile::MapTile()
 {
@@ -28,7 +29,6 @@ void MapTile::Render()
 	glPushMatrix();
 
 	glTranslatef(_position.x(), 0, _position.z());
-
 	glBegin(GL_QUADS);
 	glVertex3f(-_mapSize, 0.0f, -_mapSize);
 	glVertex3f(-_mapSize, 0.0f, _mapSize);

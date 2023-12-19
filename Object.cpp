@@ -26,7 +26,8 @@ Object::Object (const char* filename, Vec3 pos, Vec3 ro, Vec3 s, double rad)
 
 Object::~Object()
 {
-
+	_faces.clear();
+	_childObjects.clear();
 }
 
 void Object::Init(Vec3 pos, Vec3 ro, Vec3 s, double rad) {

@@ -10,7 +10,7 @@ GameManager* GM = GameManager::GetInstance();
 
 double prevTime;
 double slowDeltaTime = DELTA_TIME;
-double fastDeltaTime = DELTA_TIME * 5;
+double fastDeltaTime = DELTA_TIME * 3;
 
 bool isMove = false;
 
@@ -35,6 +35,11 @@ void init(void)
 
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
+
+	printf("----------------------------------------------------------------\n");
+	printf("-------------12191806 이주용 컴퓨터 그래픽스 프로젝트-----------\n");
+	printf("조작법 - WASD, 방향키 : 이동 / 좌클릭 : 발사 / 마우스 위치 : 조준\n");
+	printf("-----------------------------------------------------------------\n");
 	GM->Init();
 }
 
@@ -57,9 +62,9 @@ void idle(void)
 	double curTime = glutGet(GLUT_ELAPSED_TIME);
 	if (curTime - prevTime > DELTA_TIME * 1000)
 	{
-		double dt = isMove ? fastDeltaTime : slowDeltaTime;
 		prevTime = curTime;
 
+		double dt = isMove ? fastDeltaTime : slowDeltaTime;
 		GM->Update(dt);
 		glutPostRedisplay();
 	}
@@ -174,17 +179,7 @@ int main(int argc, char** argv)
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
 	glutInitWindowSize(WIDTH, HEIGHT);
 	glutInitWindowPosition(300, 300);
-	glutCreateWindow("My First GL Program");
- 
-	//glutGameModeString("1280x720:32");
-
-	//if (glutGameModeGet(GLUT_GAME_MODE_POSSIBLE))
-	//	glutEnterGameMode();
-	//else
-	//{
-	//	printf("The select mode is not available\n");
-	//	exit(1);
-	//}
+	glutCreateWindow("12191806 CG Project");
 
 	init();
 	

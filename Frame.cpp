@@ -15,7 +15,7 @@ Frame::Frame(const char* filename, double time)
 
 Frame::~Frame()
 {
-
+	_faces.clear();
 }
 
 void Frame::LoadObject(const char* filename)

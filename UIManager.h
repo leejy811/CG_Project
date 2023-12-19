@@ -22,6 +22,7 @@ private:
 	void DrawString(const char* str, int value, float x, float y);
 	void DrawInfo();
 	void DrawHealthBar(int width, int height);
+	void DrawStart();
 private:
 	Vec3 _mousePos;
 };

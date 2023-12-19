@@ -26,14 +26,18 @@ void Enemy::Init(const char* filename, Vec3 pos, Vec3 ro, Vec3 s, Character& tar
 	Character::Init(filename, pos, ro, s, rad, h, ms);
 	isActive = false;
 	_target = &tar;
+	_animator->ChangeState(MOVE);
 }
 
 void Enemy::Update(double dt)
 {
 	if (!isActive) return;
 
-	UpdateMove();
-	AutoShoot(dt);
+	if (!_isDie)
+	{
+		UpdateMove();
+		AutoShoot(dt);
+	}
 
 	Character::Update(dt);
 }
@@ -47,6 +51,7 @@ void Enemy::Render()
 
 void Enemy::MinimapRender(float red, float green, float blue, float size)
 {
+	if (_isDie) return;
 	Character::MinimapRender(red, green, blue, size);
 }
 

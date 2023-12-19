@@ -21,7 +21,6 @@ public:
 	void SetTarget(Object& tar);
 
 	Vec3 offset;
-	Vec3 minimapOffset;
 private:
 	Vec3 _position;
 	Vec3 _up;

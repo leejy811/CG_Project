@@ -26,7 +26,6 @@ public:
 		{
 			_instance = new GameManager();
 		}
-
 		return _instance;
 	}
 	void Init();
@@ -39,7 +38,9 @@ public:
 	Player* GetPlayer();
 	int GetCurStage();
 	int GetCurEnemyCount();
+	bool GetIsStart();
 	void SetCurEnemyCount();
+	void ResetGame();
 private:
 	GameManager();
 	GameManager(const GameManager& other);
@@ -68,6 +69,8 @@ private:
 
 	//Stage
 	int _curStage = 1;
+
+	bool _isStart = false;
 };
 
 #endif

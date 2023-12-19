@@ -20,7 +20,7 @@ public:
 	void OnCollision(CollisonLayer layer, bool isEnter);
 public:
 	Vec3 targetVec;
-	double bulletSpeed = 2;
+	double bulletSpeed = 1.5;
 };
 
 #endif

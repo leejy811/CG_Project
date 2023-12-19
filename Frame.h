@@ -8,17 +8,13 @@ using namespace std;
 #include "Face.h"
 #include <vector>
 
-#define ROBOT "OBJ/Robot.obj"
-#define ROBOT1 "OBJ/Robot1.obj"
-#define ROBOT2 "OBJ/Robot2.obj"
 #define PLAYER_IDLE1 "OBJ/Player_Idle1.obj"
 #define PLAYER_IDLE2 "OBJ/Player_Idle2.obj"
-#define PLAYER_MOVE "OBJ/Player_Move.obj"
+#define PLAYER_MOVE1 "OBJ/Player_Move1.obj"
+#define PLAYER_MOVE2 "OBJ/Player_Move2.obj"
+#define PLAYER_MOVE3 "OBJ/Player_Move3.obj"
+#define PLAYER_MOVE4 "OBJ/Player_Move4.obj"
 #define PLAYER_DIE "OBJ/Player_Die.obj"
-
-#define ENEMY_IDLE "OBJ/Enemy_Idle.obj"
-#define ENEMY_MOVE "OBJ/Enemy_Move.obj"
-#define ENEMY_DIE "OBJ/Enemy_Die.obj"
 
 class Frame
 {

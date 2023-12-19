@@ -28,6 +28,9 @@ void UIManager::Render()
 	DrawInfo();
 	DrawHealthBar(WIDTH / 20, HEIGHT / 60);
 
+	if (!GameManager::GetInstance()->GetIsStart())
+		DrawStart();
+
 	glPopMatrix();
 	glMatrixMode(GL_PROJECTION);
 	glPopMatrix();
@@ -117,4 +120,9 @@ void UIManager::DrawHealthBar(int width, int height)
 	glEnd();
 
 	glPopMatrix();
+}
+
+void UIManager::DrawStart()
+{
+	DrawString("Any Button Click To Start", NULL, -WIDTH / 10, HEIGHT * -0.4);
 }

@@ -5,6 +5,7 @@
 
 #include "Vec3.h"
 #include "Player.h"
+#include "GL/freeglut.h"
 
 using namespace std;
 

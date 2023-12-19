@@ -1,4 +1,5 @@
 #include "GameManager.h"
+#include "SoundManager.h"
 #include "GL/freeglut.h"
 #include <stdlib.h>
 #include <time.h>
@@ -24,13 +25,13 @@ void GameManager::Init()
 {
 	srand(time(NULL));
 
-	_player = new Player("img/PlayerTexture.bmp", Vec3(0, 0, 0), Vec3(0, 0, 0), Vec3(1, 1, 1), 2, 10, 3);
+	_player = new Player("img/PlayerTexture.bmp", Vec3(0, 0, 0), Vec3(0, 0, 0), Vec3(1, 1, 1), 0.5, 10, 2);
 	_mainCamera = new Camera(Vec3(0, 10, 2), *_player);
 	_uiManager = new UIManager();
 
 	for (int i = 0; i < _enemyPoolSize; i++)
 	{
-		_enemies.push_back(new Enemy("img/EnemyTexture.bmp", Vec3(0, 0, 0), Vec3(0, 0, 0), Vec3(1, 1, 1), *_player, 2, 1, 1));
+		_enemies.push_back(new Enemy("img/EnemyTexture.bmp", Vec3(0, 0, 0), Vec3(0, 0, 0), Vec3(1, 1, 1), *_player, 0.5, 1, 0.5));
 	}
 
 	_mapTiles.push_back(new MapTile(50, *_player, Vec3(1, 0, 1)));
@@ -39,6 +40,10 @@ void GameManager::Init()
 	_mapTiles.push_back(new MapTile(50, *_player, Vec3(-1, 0, -1)));
 
 	InitStage();
+
+	_isStart = false;
+
+	SoundManager::GetInstance()->PlaySoundToEnum(BGM_E);
 }
 
 void GameManager::Update(double dt)
@@ -82,17 +87,23 @@ void GameManager::Render()
 }
 
 void GameManager::HandleKeyInput(unsigned char key, int state)
-{
+{ 
+	if (!_isStart && state == KEY_DOWN)
+		_isStart = true;
 	_player->HandleInput(key, state);
 }
 
 void GameManager::HandleSpecialInput(int  key, int state)
 {
+	if (!_isStart && state == KEY_DOWN)
+		_isStart = true;
 	_player->HandleSpecialInput(key, state);
 }
 
 void GameManager::HandleMouseInput(int x, int y, int state, int clickState)
 {
+	if (!_isStart && state != MOUSE_MOTION)
+		_isStart = true;
 	_uiManager->SetMousePositon(x, y);
 	_player->HandleMouseInput(x, y, state, clickState);
 }
@@ -112,6 +123,11 @@ int GameManager::GetCurEnemyCount()
 	return _curEnemyCount;
 }
 
+bool GameManager::GetIsStart()
+{
+	return _isStart;
+}
+
 void GameManager::SetCurEnemyCount()
 {
 	_curEnemyCount--;
@@ -119,6 +135,7 @@ void GameManager::SetCurEnemyCount()
 
 void GameManager::SpawnEnemy(double dt)
 {
+	if (!_isStart) return;
 	int time = glutGet(GLUT_ELAPSED_TIME);
 
 	if (time - _curEnemySpawnTime > _enemySpawnCool * (1.0 / dt) * DELTA_TIME)
@@ -130,7 +147,8 @@ void GameManager::SpawnEnemy(double dt)
 				_curEnemySpawnTime = time;
 				e->isActive = true;
 				double angle = (double)(rand() % 360) * (3.14152 / 180);
-				e->position = Vec3(10 * cos(angle), 0, 10 * sin(angle));
+				e->position = Vec3(6 * cos(angle), 0, 6 * sin(angle));
+				e->_animator->ChangeState(MOVE);
 				break;
 			}
 		}
@@ -206,7 +224,7 @@ void GameManager::DrawMinimap()
 void GameManager::InitStage()
 {
 	_curStage = 1;
-	_curEnemyCount = 10;
+	_curEnemyCount = 5;
 }
 
 void GameManager::CheckStage()
@@ -217,6 +235,18 @@ void GameManager::CheckStage()
 
 void GameManager::UpdateStage()
 {
+	SoundManager::GetInstance()->PlaySoundToEnum(CLEAR_E);
 	_curStage++;
-	_curEnemyCount = 10 + _curStage * 2;
+	_curEnemyCount = 5 + _curStage * 2;
+}
+
+void GameManager::ResetGame()
+{
+	delete _mainCamera;
+	delete _uiManager;
+
+	_enemies.clear();
+	_mapTiles.clear();
+
+	Init();
 }

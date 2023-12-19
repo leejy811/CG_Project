@@ -15,18 +15,18 @@ AnimationState::AnimationState(State s, double speed, bool isLoop)
 	switch (s)
 	{
 	case IDLE:
-		frames.push_back(new Frame(PLAYER_IDLE1, 1));
-		frames.push_back(new Frame(PLAYER_IDLE2, 1));
+		frames.push_back(new Frame(PLAYER_IDLE1, 0.5));
+		frames.push_back(new Frame(PLAYER_IDLE2, 0.5));
 		break;
 	case MOVE:
-		frames.push_back(new Frame(ROBOT, 1));
-		frames.push_back(new Frame(ROBOT1, 1));
-		frames.push_back(new Frame(ROBOT2, 1));
+		frames.push_back(new Frame(PLAYER_MOVE1, 1.5));
+		frames.push_back(new Frame(PLAYER_MOVE2, 1.1));
+		frames.push_back(new Frame(PLAYER_MOVE3, 1.1));
+		frames.push_back(new Frame(PLAYER_MOVE4, 0.9));
 		break;
 	case DIE:
-		frames.push_back(new Frame(ROBOT, 1));
-		frames.push_back(new Frame(ROBOT1, 1));
-		frames.push_back(new Frame(ROBOT2, 1));
+		frames.push_back(new Frame(PLAYER_IDLE1, 0.5));
+		frames.push_back(new Frame(PLAYER_DIE, 0));
 		break;
 	default:
 		break;
@@ -35,5 +35,5 @@ AnimationState::AnimationState(State s, double speed, bool isLoop)
 
 AnimationState::~AnimationState()
 {
-
+	frames.clear();
 }

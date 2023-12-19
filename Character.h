@@ -23,19 +23,22 @@ public:
 	virtual void OnCollision(CollisonLayer layer, bool isEnter);
 	virtual void OnDamage();
 	virtual void OnDie();
+	virtual void DelayDie(double dt);
 	virtual void PlayAnimation(double dt);
 	virtual void InitAnimation();
 	virtual void InitTexture(const char* filename);
 public:
 	Weapon* _weapon;
+	Animator* _animator;
 	double _curHealth;
 	double _maxHealth;
 protected:
 	void Move(double dt);
 protected:
-	Animator* _animator;
 	Vec3 _moveDirection;
 	double _moveSpeed;
+	double _dieDelayTime = 0;
+	bool _isDie = false;
 };
 
 #endif

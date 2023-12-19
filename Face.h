@@ -32,7 +32,12 @@ public:
 		_vertNormals.push_back(n1);
 		_vertNormals.push_back(n2);
 	}
-	~Face() { }
+	~Face()
+	{
+		_vertices.clear();
+		_uvs.clear();
+		_vertNormals.clear();
+	}
 };
 
 #endif

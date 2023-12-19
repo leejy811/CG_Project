@@ -1,6 +1,7 @@
 #include "Character.h"
 #include "GL/freeglut.h"
 #include "bmpfuncs.h"
+#include "SoundManager.h"
 
 Character::Character()
 {
@@ -18,7 +19,9 @@ Character::Character(const char* filename, Vec3 pos, Vec3 ro, Vec3 s, double rad
 
 Character::~Character()
 {
-
+	Object::~Object();
+	delete _weapon;
+	delete _animator;
 }
 
 void Character::Init(const char* filename, Vec3 pos, Vec3 ro, Vec3 s, double rad, double h, double ms) {
@@ -26,8 +29,10 @@ void Character::Init(const char* filename, Vec3 pos, Vec3 ro, Vec3 s, double rad
 	_moveSpeed = ms;
 	_curHealth = h;
 	_maxHealth = h;
+	_dieDelayTime = 0;
+	_isDie = false;
 
-	_weapon = new Weapon(Vec3(0, 1, -0.2), ro, Vec3(0, 0, 0), Vec3(1.3, 0, 0));
+	_weapon = new Weapon(Vec3(0, 0, -0.2), ro, Vec3(0, 0, 0), Vec3(1.3, 0, 0));
 	_childObjects.push_back(_weapon);
 
 	_animator = new Animator(IDLE);
@@ -38,9 +43,13 @@ void Character::Init(const char* filename, Vec3 pos, Vec3 ro, Vec3 s, double rad
 
 void Character::Update(double dt)
 {
-	Move(dt);
+	if (!_isDie)
+	{
+		Move(dt);
+	}
 	_weapon->Update(dt);
 	PlayAnimation(dt);
+	DelayDie(dt);
 }
 
 void Character::Render()
@@ -84,7 +93,7 @@ void Character::MinimapRender(float red, float green, float blue, float size)
 
 void Character::OnCollision(CollisonLayer layer, bool isEnter)
 {
-	if (layer == BULLET)
+	if (layer == BULLET && !_isDie)
 		OnDamage();
 }
 
@@ -96,6 +105,7 @@ void Character::Move(double dt)
 void Character::OnDamage()
 {
 	_curHealth -= 1;
+	SoundManager::GetInstance()->PlaySoundToEnum(HIT_E);
 
 	if (_curHealth <= 0)
 	{
@@ -105,7 +115,23 @@ void Character::OnDamage()
 
 void Character::OnDie()
 {
-	isActive = false;
+	_isDie = true;
+	_animator->ChangeState(DIE);
+	SoundManager::GetInstance()->PlaySoundToEnum(DIE_E);
+}
+
+void Character::DelayDie(double dt)
+{
+	if (_isDie)
+	{
+		_dieDelayTime += dt;
+
+		if (_dieDelayTime >= 3)
+		{
+			_isDie = false;
+			isActive = false;
+		}
+	}
 }
 
 void Character::PlayAnimation(double dt)
@@ -116,7 +142,7 @@ void Character::PlayAnimation(double dt)
 
 	int idx = curAnim->_curFrame % curAnim->frames.size();
 	_animator->_lerpAlpha += dt * curAnim->_speed * curAnim->frames[idx]->_duration;
-	double alpha = sin(_animator->_lerpAlpha) * 0.5 + 0.5;
+	double alpha = _animator->_lerpAlpha;
 
 	for (int i = 0; i <_faces.size(); i++)
 	{
@@ -127,10 +153,10 @@ void Character::PlayAnimation(double dt)
 		}
 	}
 
-	if (_animator->_lerpAlpha >= 90 * 3.14 / 180)
+	if (_animator->_lerpAlpha >= 1)
 	{
 		curAnim->_curFrame++;
-		_animator->_lerpAlpha = -90 * 3.14 / 180;
+		_animator->_lerpAlpha = 0;
 	}
 }
 
